@@ -117,12 +117,6 @@ abstract class Form
             $value = "";
         }
 
-        if ($required) {
-            $required = "required";
-        } else {
-            $required = "";
-        }
-
         $this->form .= "<textarea name='$name' $required";
         if (isset($maxlength)) {
             $this->form .= " maxlength='$maxlength'";
