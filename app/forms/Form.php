@@ -85,6 +85,9 @@ abstract class Form
         if (isset($placeholder)) {
             $this->form .= " placeholder='$placeholder'";
         }
+        if (isset($oninput)) {
+            $this->form .= " oninput='$oninput'";
+        }
         if (isset($accept)) {
             $accept = implode(", ", $accept);
             $this->form .= " accept='$accept'";
