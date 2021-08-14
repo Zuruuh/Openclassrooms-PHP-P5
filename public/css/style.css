@@ -36,6 +36,7 @@ main {
 
 .nav-dropdown-item {
   transition: color 0.15s ease-in-out;
+  max-width: 280px !important;
 }
 
 .nav-dropdown-item:hover {
@@ -61,7 +62,7 @@ main {
 #nav-bar .navbar-nav li.nav-item a.nav-link:hover {
   color: #0b5ed7;
 }
-#nav-bar .navbar-nav li.nav-item a.nav-link:active, 
+#nav-bar .navbar-nav li.nav-item a.nav-link:active,
 #nav-bar .navbar-nav li.nav-item a.nav-link:focus {
   color: #fff;
 }
@@ -86,7 +87,7 @@ footer {
 }
 
 .social-network:hover a,
-.footer-nav-link:hover a{
+.footer-nav-link:hover a {
   color: #0b5ed7 !important;
   text-decoration: underline !important;
   transition: color 0.15s ease-in-out, text-decoration 0.15s ease-in-out;
@@ -103,6 +104,7 @@ footer {
 }
 
 .tag {
+  cursor: pointer;
   max-width: fit-content;
 }
 
@@ -115,6 +117,7 @@ footer {
 .profile-picture-sm {
   width: 80px;
   height: 80px;
+  display:none !important;
 }
 
 #user-info-container {
@@ -133,20 +136,8 @@ footer {
   max-width: 280px !important;
 }
 
-.nav-dropdown-item {
-  max-width: 280px !important;
-}
-
-.tag {
-  cursor: pointer;
-}
-
 .admin-comment {
   margin: 0 1rem !important;
-}
-
-.profile-picture-sm {
-  display:none !important;
 }
 
 @media (min-width: 576px) {
@@ -159,7 +150,7 @@ footer {
   }
   
   .profile-picture-sm {
-    display:block !important;
+    display: block !important;
   }
 }
 
@@ -178,8 +169,8 @@ footer {
   }
 
   #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:active,
-  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:focus, 
-   #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:hover {
+  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:focus,
+  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:hover {
     color: #fff;
     background: #0b5ed7;
   }
