@@ -213,5 +213,38 @@ class Http
         unset($_COOKIE[$value]);
     }
 
+    /**
+     * Validates a token or not
+     * 
+     * @param string $TOKEN Token to validate
+     * @param mixed  $model User model
+     * 
+     * @return void
+     */
+    public static function validateToken(string $TOKEN, mixed $model): void
+    {
+        $TOKEN = base64_decode($TOKEN);
+        if (!str_contains($TOKEN, "|§§§|")) {
+            \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
+            \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
+            return;
+        }
+
+        $TOKEN = explode("|§§§|", $TOKEN);
+        $EMAIL = $TOKEN[1];
+        $PASSWORD = $TOKEN[0];
+
+        $user = $model->findBy($EMAIL);
+        if (!$user) {
+            \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
+            \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
+        }
+
+        if ($user["password"] !== $PASSWORD) {
+            \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
+            \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
+        }
+    }
+
 }
 
