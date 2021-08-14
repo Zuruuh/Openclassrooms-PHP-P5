@@ -11,7 +11,7 @@
  * @link     https://younes-ziadi.com/blog/
  */
 
-require_once "app/utils/autoload.php";
+require "app/utils/autoload.php";
 
 /**
  * App Class Doc 
@@ -40,12 +40,12 @@ final class App
         session_start();
         date_default_timezone_set("Europe/Paris");
 
-        if (!empty($_GET["page"])) {
-            $controllerName = ucfirst($_GET["page"]);
+        if (\Utils\Http::getParam("page", "get")) {
+            $controllerName = ucfirst(strtolower(\Utils\Http::getParam("page", "get")));
         }
 
-        if (!empty($_GET["action"])) {
-            $action = $_GET["action"];
+        if (\Utils\Http::getParam("action", "get")) {
+            $action = \Utils\Http::getParam("action", "get");
         }
 
         $controllerName = "\Controllers\\" . $controllerName;
