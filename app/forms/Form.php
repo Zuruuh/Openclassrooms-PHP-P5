@@ -12,7 +12,6 @@
  */
 
 namespace Forms;
-require_once "app/utils/autoload.php";
 
 /**
  * Form Class
