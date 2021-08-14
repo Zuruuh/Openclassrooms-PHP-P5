@@ -53,12 +53,12 @@ class Http
             if (!isset($_POST[$value])) {
                 return false;
             }
-            return htmlspecialchars($_POST[$value]);
+            return htmlspecialchars(str_replace("/", "", $_POST[$value]));
         }
         if (!isset($_GET[$value])) {
             return false;
         }
-        return htmlspecialchars($_GET[$value]);
+        return htmlspecialchars(str_replace("/", "", $_GET[$value]));
     }
 
     /**
@@ -185,7 +185,7 @@ class Http
         if (!isset($_COOKIE[$value])) {
             return false;
         }
-        return htmlspecialchars($_COOKIE[$value]);
+        return htmlspecialchars(str_replace("/", "", $_COOKIE[$value]));
     }
 
     /**
