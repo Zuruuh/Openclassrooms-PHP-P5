@@ -53,12 +53,12 @@ class Http
             if (!isset($_POST[$value])) {
                 return false;
             }
-            return $_POST[$value];
+            return htmlspecialchars($_POST[$value]);
         }
         if (!isset($_GET[$value])) {
             return false;
         }
-        return $_GET[$value];
+        return htmlspecialchars($_GET[$value]);
     }
 
     /**
