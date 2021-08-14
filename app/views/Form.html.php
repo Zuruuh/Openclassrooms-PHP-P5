@@ -13,5 +13,5 @@
 ?>
 <div style="height:0;"></div>
 <div class="form w-full d-flex align-items-center flex-column mt-5">
-    <?= $page_forms[0] ?>
+    <?= htmlspecialchars($page_forms[0]) ?>
 </div>
