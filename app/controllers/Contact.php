@@ -90,7 +90,9 @@ class Contact extends Controller
         $mail .= \Utils\Mail::createElement("p", "Adresse pour reprise de contact: $EMAIL", [], true);
         $mail .= \Utils\Mail::createElement("p", "$MESSAGE_CONTENT");
 
-        \Utils\Mail::sendEmail("ziadi.mail.pro@gmail.com", $SUBJECT, $mail);
+        $config = parse_ini_file("config/database.ini", true);
+
+        \Utils\Mail::sendEmail($config["BLOG_MASTER_EMAIL"], $SUBJECT, $mail);
 
         // ? Redirect with confirmation message
         \Utils\Http::redirect("index.php");
