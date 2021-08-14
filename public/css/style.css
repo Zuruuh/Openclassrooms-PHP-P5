@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic");
 
 * {
-    font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 html {
@@ -10,10 +10,10 @@ html {
 }
 
 body {
-    min-height: 100vh !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  min-height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 main{
@@ -39,7 +39,7 @@ main{
 }
 
 .nav-dropdown-item:hover {
-  color: #0B5ED7;
+  color: #0b5ed7;
   transition: color 0.15s ease-in-out;
 }
 
@@ -49,7 +49,7 @@ main{
   transition: color 0.15s ease-in-out;
 }
 #nav-bar .navbar-brand:hover {
-  color: #0B5ED7;
+  color: #0b5ed7;
   transition: color 0.15s ease-in-out;
 }
 #nav-bar .navbar-nav {
@@ -59,13 +59,13 @@ main{
   color: #fff;
 }
 #nav-bar .navbar-nav li.nav-item a.nav-link:hover {
-  color: #0B5ED7;
+  color: #0b5ed7;
 }
 #nav-bar .navbar-nav li.nav-item a.nav-link:active, #nav-bar .navbar-nav li.nav-item a.nav-link:focus {
   color: #fff;
 }
 #nav-bar .navbar-nav li.nav-item a.nav-link.active {
-  color: #0B5ED7;
+  color: #0b5ed7;
 }
 #nav-bar .navbar-toggler {
   font-size: 80%;
@@ -77,16 +77,16 @@ main{
 }
 
 .admin-nav-link:hover {
-  color: #0B5ED7 !important;
+  color: #0b5ed7 !important;
 }
 
 footer {
-  background-color: #6C757D;
+  background-color: #6c757d;
 }
 
 .social-network:hover a,
 .footer-nav-link:hover a{
-  color: #0B5ED7 !important;
+  color: #0b5ed7 !important;
   text-decoration: underline !important;
   transition: color 0.15s ease-in-out, text-decoration 0.15s ease-in-out;
 }
@@ -163,36 +163,38 @@ footer {
 }
 
 @media (min-width: 992px) {
-    #nav-bar {
-      padding-top: 1.5rem;
-      padding-bottom: 1.5rem;
-      transition: padding-top 0.3s, padding-bottom 0.3s;
-    }
-    #nav-bar .navbar-brand {
-      font-size: 1.75em;
-      transition: font-size 0.3s;
-    }
-    #nav-bar .navbar-nav {
-      margin-top: 0;
-    }
+  #nav-bar {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    transition: padding-top 0.3s, padding-bottom 0.3s;
+  }
+  #nav-bar .navbar-brand {
+    font-size: 1.75em;
+    transition: font-size 0.3s;
+  }
+  #nav-bar .navbar-nav {
+    margin-top: 0;
+  }
 
-    #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:active, #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:focus, #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:hover {
-      color: #fff;
-      background: #0B5ED7;
-    }
-  
-    #nav-bar.navbar-shrink {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-    }
-    #nav-bar.navbar-shrink .navbar-brand {
-      font-size: 1.5em;
-    }
-    #user-info-container {
-      flex-direction: row !important;
-    }
-    #user-info-profile-picture {
-      width: 300px !important;
-      height: 300px !important;
-    }
+  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:active,
+  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:focus, 
+   #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:hover {
+    color: #fff;
+    background: #0b5ed7;
+  }
+
+  #nav-bar.navbar-shrink {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  #nav-bar.navbar-shrink .navbar-brand {
+    font-size: 1.5em;
+  }
+  #user-info-container {
+    flex-direction: row !important;
+  }
+  #user-info-profile-picture {
+    width: 300px !important;
+    height: 300px !important;
+  }
 }
