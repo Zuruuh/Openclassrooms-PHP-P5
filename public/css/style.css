@@ -117,7 +117,7 @@ footer {
 .profile-picture-sm {
   width: 80px;
   height: 80px;
-  display:none !important;
+  display: none !important;
 }
 
 #user-info-container {
@@ -148,7 +148,6 @@ footer {
     margin: 0 3rem !important;
     max-width: 1400px !important;
   }
-  
   .profile-picture-sm {
     display: block !important;
   }
