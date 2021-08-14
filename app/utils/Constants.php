@@ -102,8 +102,46 @@ abstract class Constants
     // ! COMMENTS CONSTANTS
 
     public static $MAX_COMMENT_LENGTH = 512;
+    
+    // * COMMENTS ERROR MESSAGES
 
-        // * COMMENTS ERROR MESSAGES
+    public static $COMMENT_UPDATE_SUCCESS = "Commentaire mis à jour !";
+    public static $COMMENT_DELETE_SUCCESS = "Commentaire supprimé !";
+    public static $COMMENT_DO_NOT_EXIST = "Ce commentaire n'existe pas !";
+    public static $COMMENT_ALREADY_VERIFIED = "Ce commentaire a déjà été vérifié";
+    public static $COMMENT_CONTENT_TOO_LONG = "Votre commentaire est trop long ! (512 charactères max)";
+    public static $COMMENT_CONTENT_REQUIRED = "Vous devez inclure un contenu pour poster un commentaire..";
+    public static $COMMENT_POSTED = "Votre commentaire a été correctement posté !";
+    public static $COMMENT_POSTED_NOT_VERIFIED = "Votre commentaire a été correctement posté ! Il est désormais en attente de vérification manuelle.";
+    public static $COMMENT_OWNER = "Ce commentaire n'est pas le vôtre !";
+    
+    // ! CONTACT CONSTANTS
+
+    public static $SUBJECT_TOO_LONG = "Votre object est trop long !";
+    
+    public static $MESSAGE_TOO_LONG = "Votre message est trop long !";
+
+    // ! BAN CONSTANTS
+    
+    public static $ACCOUNT_BANNED = "Compte Banni";
+    public static $ACCOUNT_BANNED_ERROR = "Désolé, ce compte a été banni !";
+    public static $REMOVED_ACCOUNT = "[removed]";
+    public static $BAN_SUCCESS = "Ce compte a été correctement banni.";
+    public static $SELF_BAN = "Vous ne pouvez pas vous bannir vous-même...";
+    
+    // ! PAGES CONSTANTS
+
+    public static $USER_IS_NOT_ADMIN = "Désolé, cette page est réservée aux administrateurs.";
+    public static $INVALID_SESSION = "Votre session est invalide ! Déconnectez-vous et reconnectez-vous, puis réessayez.";
+    public static $MUST_BE_CONNECTED = "Vous devez être connecté pour accéder à cette page !";
+    public static $EMAIL_SENT = "Un email vous a été envoyé !";
+
+    // ! PARAMS CONSTANTS
+
+    public static $MISSING_FIELD = "Vous devez remplir tous les champs !";
+    public static $MISSING_USER_URL_PARAM = "Vous devez spécifier un utilisateur dans l'url pour accéder à cette page !";
+    public static $MISSING_POST_URL_PARAM = "Vous devez spécifier un post dans l'url pour accéder à cette page !";
+    public static $MISSING_COMMENT_URL_PARAM = "Vous devez spécifier un commentaire dans l'url pour accéder à cette page !";
 
     public static $COMMENT_CONTENT_TOO_LONG = "Votre commentaire est trop long ! (512 charactères max)";
 }
