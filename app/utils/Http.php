@@ -133,7 +133,7 @@ class Http
         }
         $sess = explode("|", self::getSession("user_id"));
         $user_model = new \Models\User();
-        $user = $user_model->find(intval($sess[0]));
+        $user = $user_model->find((int) $sess[0]);
         if (!$user) {
             return false;
         }
@@ -185,7 +185,7 @@ class Http
         if (!isset($_COOKIE[$value])) {
             return false;
         }
-        return $_COOKIE[$value];
+        return htmlspecialchars($_COOKIE[$value]);
     }
 
     /**
