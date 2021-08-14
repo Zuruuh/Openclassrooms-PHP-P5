@@ -52,7 +52,7 @@ class Database
             }
             catch(Exception $error)
             {
-                die('Erreur de connection :'.$error->getMessage());
+                exit(htmlspecialchars('Erreur de connection :'.$error->getMessage()));
             }
         }
         return self::$_instance;
