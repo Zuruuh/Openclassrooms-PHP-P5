@@ -335,30 +335,7 @@ class User extends \Controllers\Controller
         if (\Utils\Http::getParam("token", "get")) {
             if (\Utils\Http::getParam("password") && \Utils\Http::getParam("password_conf")) {
                 $TOKEN = htmlspecialchars(\Utils\Http::getParam("token", "get"));
-                $TOKEN = base64_decode($TOKEN);
-
-                if (!str_contains($TOKEN, "|§§§|")) {
-                    \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
-                    \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                    return;
-                }
-
-                $TOKEN = explode("|§§§|", $TOKEN);
-                $EMAIL = $TOKEN[1];
-                $PASSWORD = $TOKEN[0];
-
-                $user = $this->model->findBy($EMAIL);
-                if (!$user) {
-                    \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
-                    \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                    return;
-                }
-
-                if ($user["password"] !== $PASSWORD) {
-                    \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
-                    \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                    return;
-                }
+                \Utils\Http::validateToken($TOKEN, $this->model);
 
                 $errors = array();
 
@@ -405,29 +382,7 @@ class User extends \Controllers\Controller
             } else {
                 // ! Verify token
                 $TOKEN = \Utils\Http::getParam("token", "get");
-                $TOKEN = base64_decode($TOKEN);
-                if (!str_contains($TOKEN, "|§§§|")) {
-                    \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
-                    \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                    return;
-                }
-
-                $TOKEN = explode("|§§§|", $TOKEN);
-                $EMAIL = $TOKEN[1];
-                $PASSWORD = $TOKEN[0];
-
-                $user = $this->model->findBy($EMAIL);
-                if (!$user) {
-                    \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
-                    \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                    return;
-                }
-
-                if ($user["password"] !== $PASSWORD) {
-                    \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
-                    \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                    return;
-                }
+                \Utils\Http::validateToken($TOKEN, $this->model);
 
                 // ! Display new password form
             
