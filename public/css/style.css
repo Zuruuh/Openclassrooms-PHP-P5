@@ -16,13 +16,13 @@ body {
   justify-content: space-between;
 }
 
-main{
+main {
   min-height: calc(100vh - 12.125rem);
   height: auto;
 }
 
 #nav-user-button,
-#nav-user-profile-picture{
+#nav-user-profile-picture {
   width: 75px;
   height: 75px;
 }
@@ -61,7 +61,8 @@ main{
 #nav-bar .navbar-nav li.nav-item a.nav-link:hover {
   color: #0b5ed7;
 }
-#nav-bar .navbar-nav li.nav-item a.nav-link:active, #nav-bar .navbar-nav li.nav-item a.nav-link:focus {
+#nav-bar .navbar-nav li.nav-item a.nav-link:active, 
+#nav-bar .navbar-nav li.nav-item a.nav-link:focus {
   color: #fff;
 }
 #nav-bar .navbar-nav li.nav-item a.nav-link.active {
