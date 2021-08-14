@@ -76,11 +76,11 @@ class Post extends \Models\Model
         $query->bindValue(":title", $title);
         $query->bindValue(":overview", $overview);
         $query->bindValue(":content", $content);
+        $tag_value = "NULL";
         if ($tags === "") {
-            $query->bindValue(":tags", "NULL");
-        } else {
-            $query->bindValue(":tags", $tags);
+            $tag_value = $tags;
         }
+        $query->bindValue(":tags", $tag_value);
         $query->execute();
         return $this->db->lastInsertId();
     }
