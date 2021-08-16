@@ -40,7 +40,7 @@ class Pagination
      */
     public static function paginate(string $link, int $total = 0, int $MAX_PER_PAGE = 10, int $PAGE = 1): array
     {
-        $MAX_PAGE = 0;
+        $MAX_PAGE = 1;
         $OFFSET = 0;
 
         while ($total > $MAX_PER_PAGE) {
@@ -54,9 +54,10 @@ class Pagination
 
         $page_buttons = array();
 
+
         array_push($page_buttons, \Utils\ElementBuilder::buildPagination("<<", $PAGE === 1 ? "disabled" : "", $link . $PAGE-1));
         array_push($page_buttons, \Utils\ElementBuilder::buildPagination($PAGE, "active", $link . $PAGE));
-        array_push($page_buttons, \Utils\ElementBuilder::buildPagination(">>", $PAGE === $MAX_PAGE+1 ? "disabled" : "", $link . $PAGE+1));
+        array_push($page_buttons, \Utils\ElementBuilder::buildPagination(">>", $PAGE === $MAX_PAGE ? "disabled" : "", $link . $PAGE+1));
 
         return ["request_params" => ["offset" => $OFFSET, "limit" =>$MAX_PER_PAGE], "page_buttons" => implode("", $page_buttons)];
     }
