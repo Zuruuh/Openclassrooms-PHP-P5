@@ -111,8 +111,8 @@ class Post extends Controller
             if (!$PAGE) {
                 $PAGE = 1;
             }
-            $PAGINATION = \Utils\Pagination::paginate("index.php?page=post&action=get&post=$POST_ID&pagination=", $comment_number, 15, $PAGE);
-
+            $PAGINATION = \Utils\Pagination::paginate("index.php?page=&action=get&post=$POST_ID&pagination=", $comment_number, 15, $PAGE);
+            
             $pagination_params = $PAGINATION["request_params"];
 
             $comments = $comment_model->getPostComments($POST_ID, $pagination_params["offset"], $pagination_params["limit"]); 
@@ -144,20 +144,20 @@ class Post extends Controller
                 );
                 array_push($comments_elements, $comment_element);
                 
-
-                $POST_ID = \Utils\Http::getParam("post", "get");
-                \Utils\Renderer::render(
-                    "Post", "Blog - $title", [
-                        "author" => $author,
-                        "post" => $post,
-                        "comments" => $comments_elements, 
-                        "pagination" => $PAGINATION["page_buttons"],
-                        "form_type" => "create", 
-                        "values" => [], 
-                        "page_params" => ["post" => $POST_ID]],
-                    ["\Forms\Comment"]
-                );
             }
+
+            $POST_ID = \Utils\Http::getParam("post", "get");
+            \Utils\Renderer::render(
+                "Post", "Blog - $title", [
+                    "author" => $author,
+                    "post" => $post,
+                    "comments" => $comments_elements, 
+                    "pagination" => $PAGINATION["page_buttons"],
+                    "form_type" => "create", 
+                    "values" => [], 
+                    "page_params" => ["post" => $POST_ID]],
+                ["\Forms\Comment"]
+            );
         } else {
             \Utils\Errors::addError(\Utils\Constants::$MISSING_POST_URL_PARAM);
             \Utils\Http::redirect("index.php?page=post&action=view");
