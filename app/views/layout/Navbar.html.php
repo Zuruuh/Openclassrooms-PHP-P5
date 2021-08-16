@@ -54,7 +54,7 @@ namespace Layout;
                         <li>
                             <a class='dropdown-item nav-dropdown-item' href='index.php?page=user&action=view&user=<?= \Utils\Http::getSession("user_id")[0] ?>'><i class='far fa-user'> </i> Mon Profil</a>
                         </li>
-                        <li><a class='dropdown-item nav-dropdown-item' href='index.php?page=user&action=edit'><i class='far fa-edit'> </i> Editer mes informations</a></li>
+                        <li><a class='dropdown-item nav-dropdown-item' href='index.php?page=user&action=edit'><i class='far fa-edit'> </i> Editer mon profil</a></li>
                         <li><hr class='dropdown-divider'></li>
                         <li><a class='dropdown-item nav-dropdown-item' href='index.php?page=user&action=disconnect'><i class='fas fa-sign-out-alt'> </i> Me déconnecter</a></li>
                     </ul>
