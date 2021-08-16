@@ -12,7 +12,10 @@
  */
 
 extract($post);
-$user_id = \Utils\Http::getSession("user_id")[0];
+$user_id = null;
+if (\Utils\Http::isSessionCorrect()) {
+    $user_id = \Utils\Http::getSession('user_id')[0];
+}
 ?>
 
 <div style="height:0;"></div>
@@ -26,7 +29,7 @@ $user_id = \Utils\Http::getSession("user_id")[0];
         <h2 class='text-break ps-1'><?=$title?></h2>
         <div>
             <?php
-            if ($author_id === $user_id && \Utils\Http::isSessionCorrect()) { ?>
+            if ($author_id === $user_id) { ?>
                 <a class='btn btn-primary btn-sm' href='index.php?page=post&action=edit&post=<?=$id?>'><i class='fas fa-edit'></i> Modifier</a>
                 <a class='btn btn-danger btn-sm' href='index.php?page=post&action=delete&post=<?=$id?>'><i class='fas fa-trash'></i> Supprimer</a>
             <?php } ?>
