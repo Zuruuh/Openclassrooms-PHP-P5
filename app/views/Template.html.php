@@ -25,15 +25,15 @@
     <link rel="stylesheet" href="./public/css/style.css">
 </head>
 <body>
-    <?= htmlspecialchars($page_layout) ?>
+    <?= $page_layout ?>
     <main>
     <?php if ($page_errors !== "") { ?>
-        <section id='errors' style='z-index:1500' class='w-100 h-auto d-flex flex-column align-items-center position-fixed top-0'><?= htmlspecialchars($page_errors) ?></section>";  
+        <section id='errors' style='z-index:1500' class='w-100 h-auto d-flex flex-column align-items-center position-fixed top-0'><?= $page_errors ?></section>";  
     <?php } ?>
-    <?= htmlspecialchars($page_content) ?>
+    <?= $page_content ?>
     </main>
     <script src="./public/js/lib/bootstrap.bundle.min.js"></script>
     <script src="./public/js/script.js"></script>
-    <?= htmlspecialchars($page_footer) ?>
+    <?= $page_footer ?>
 </body>
 </html>
