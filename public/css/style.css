@@ -19,6 +19,15 @@ body {
 main {
   min-height: calc(100vh - 12.125rem);
   height: auto;
+  background-color: #ddd;
+}
+
+.card-img-top {
+  aspect-ratio: 1;
+}
+
+.contact-form {
+  min-height: 130px;
 }
 
 #nav-user-button,
@@ -72,6 +81,45 @@ main {
 #nav-bar .navbar-toggler {
   font-size: 80%;
   padding: 0.8rem;
+}
+
+#intro {
+  height: calc(100vh - 116px);
+  color: #fafafa;
+  position: relative;
+  background: url("../assets/background.jpg") no-repeat center center/cover;
+  flex-direction: column;
+  padding-top: 5rem!important;
+}
+
+#intro::before {
+  content: "";
+  width: 100vw;
+  height: calc(100vh - 116px);
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#intro div {
+  z-index: 3;
+}
+
+#intro img {
+  height: 100%;
+  aspect-ratio: 1;
+}
+
+#intro-right {
+  margin-bottom: 15rem;
+  margin-left: 0;
+}
+
+#intro-left {
+  width: 80%;
+  aspect-ratio: 1;
+  margin-bottom: 1.5rem;
 }
 
 .admin-nav-link {
@@ -141,6 +189,19 @@ footer {
 }
 
 @media (min-width: 576px) {
+  #intro-left {
+    width: auto;
+    height: auto;
+    margin-bottom: 5rem;
+    flex-shrink: 1;
+  }
+
+  #intro-right {
+    margin-bottom: 15rem;
+    margin-left: 4rem;
+    flex-grow: 1;
+  }
+  
   #nav-bar .container-fluid {
     padding: 0 48px !important;
   }
@@ -154,6 +215,9 @@ footer {
 }
 
 @media (min-width: 992px) {
+  #intro {
+    flex-direction: row !important;
+  }
   #nav-bar {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
