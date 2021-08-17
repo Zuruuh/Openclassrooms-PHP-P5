@@ -146,7 +146,7 @@ class FormValidator
         if (strlen($desc) > \Utils\Constants::$MAX_DESC_LENGTH) {
             return \Utils\Constants::$DESC_TOO_LONG;
         } 
-        if (preg_match("#<|>#", $desc)) {
+        if (str_contains($desc, '<') || str_contains($desc, '>')) {
             return \Utils\Constants::$DESC_SPECIAL_CHARS;
         }
         
@@ -165,7 +165,7 @@ class FormValidator
         if (strlen($location) > \Utils\Constants::$MAX_LOCATION_LENGTH) {
             return \Utils\Constants::$LOCATION_TOO_LONG;
         } 
-        if (!preg_match("#^[\p{L}-]*$#", $location)) {
+        if (str_contains($location, '<') || str_contains($location, '>')) {
             return  \Utils\Constants::$LOCATION_SPECIAL_CHARS;
         }
 
@@ -183,7 +183,7 @@ class FormValidator
         if (strlen($birthday) != 10) {
             return \Utils\Constants::$BIRTHDAY_REQUIRED;
         }
-        if (preg_match("#<|>#", $birthday)) {
+        if (str_contains($birthday, '<') || str_contains($birthday, '>')) {
             return \Utils\Constants::$BIRTHDAY_REQUIRED;
         }
         return false;
@@ -204,7 +204,7 @@ class FormValidator
         }
         $title = explode(' ', $title);
         foreach ($title as $title_part) {
-            if (!preg_match("#^[\p{L}-]*$#", $title_part)) {
+            if (str_contains($title_part, '<') || str_contains($title_part, '>')) {
                 return \Utils\Constants::$POST_TITLE_SPECIAL_CHARS;
             }
         }
@@ -225,7 +225,7 @@ class FormValidator
         }
         $overview = explode(' ', $overview);
         foreach ($overview as $overview_part) {
-            if (!preg_match("#^[\p{L}-]*$#", $overview_part)) {
+            if (str_contains($overview_part, '<') || str_contains($overview_part, '>')) {
                 return \Utils\Constants::$POST_OVERVIEW_SPECIAL_CHARS;
             }
         }
@@ -246,7 +246,7 @@ class FormValidator
         }
         $content = explode(' ', $content);
         foreach ($content as $content_part) {
-            if (!preg_match("#^[\p{L}-]*$#", $content_part)) {
+            if (str_contains($content_part, '<') || str_contains($content_part, '>')) {
                 return \Utils\Constants::$POST_CONTENT_SPECIAL_CHARS;
             }
         }
@@ -265,7 +265,7 @@ class FormValidator
         if (strlen($tags) > \Utils\Constants::$MAX_POST_TAGS_LENGTH) {
             return \Utils\Constants::$POST_TAGS_TOO_LONG;
         }
-        if (preg_match("#<|>#", $tags)) {
+        if (str_contains($tags, '<') || str_contains($tags, '>')) {
             return \Utils\Constants::$POST_TAGS_SPECIAL_CHARS;
         }
         return false;
