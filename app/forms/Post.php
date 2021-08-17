@@ -98,7 +98,8 @@ class Post extends \Forms\Form
             "placeholder" => "Votre post..",
             "required" => true,
             "value" => $post_content,
-            "class" => "p-2 my-1 col-sm-6 col-12"
+            "class" => "p-2 my-1 col-sm-6 col-12",
+            "maxlength" => \Utils\Constants::$MAX_POST_CONTENT_LENGTH
             ]
         );
         self::createField(
