@@ -111,7 +111,7 @@ class Post extends Controller
             if (!$PAGE) {
                 $PAGE = 1;
             }
-            $PAGINATION = \Utils\Pagination::paginate("index.php?page=&action=get&post=$POST_ID&pagination=", $comment_number, 15, $PAGE);
+            $PAGINATION = \Utils\Pagination::paginate("index.php?page=post&action=get&post=$POST_ID&pagination=", $comment_number, 15, $PAGE);
             
             $pagination_params = $PAGINATION["request_params"];
 
