@@ -43,52 +43,52 @@ class Contact extends \Forms\Form
             $page_params = [];
         }
 
-        self::initForm("contact", $type, "needs-validation", "post", $page_params);
+        self::initForm("contact", $type, "form-floating container w-100 d-flex flex-column align-items-center", "post", $page_params);
 
         self::createField(
             [
                 "name" => "name",
-                "label" => "Entrez votre nom et prénom: ",
                 "type" => "text",
                 "placeholder" => "Nom & Prénom",
                 "maxlength" => (\Utils\Constants::$MAX_NAME_LENGTH*2),
-                "required" => true
+                "required" => true,
+                "class" => "p-2 my-1 col-12 col-md-10"
             ]
         );
 
         self::createField(
             [
                 "name" => "email",
-                "label" => "Entrez votre adresse mail: ",
                 "type" => "email",
                 "placeholder" => "adresse@mail.com",
                 "required" => true,
-                "maxlength" => \Utils\Constants::$MAX_EMAIL_LENGTH
+                "maxlength" => \Utils\Constants::$MAX_EMAIL_LENGTH,
+                "class" => "p-2 my-1 col-12 col-md-10"
             ]
         );
 
         self::createField(
             [
                 "name" => "subject",
-                "label" => "Objet: ",
                 "type" => "text",
                 "placeholder" => "Demande d'informations..",
                 "required" => true,
-                "maxlength" => (\Utils\Constants::$MAX_NAME_LENGTH*2)
+                "maxlength" => (\Utils\Constants::$MAX_NAME_LENGTH*2),
+                "class" => "p-2 my-1 col-12 col-md-10"
             ]
         );
 
         self::createTextArea(
             [
                 "name" => "message_content",
-                "label" => "Votre message",
                 "placeholder" => "Bonjour, je vous contacte pour..",
                 "required" => true,
-                "maxlength" => \Utils\Constants::$MAX_MESSAGE_SIZE
+                "maxlength" => \Utils\Constants::$MAX_MESSAGE_SIZE,
+                "class" => "p-2 my-1 col-12 col-md-10 contact-form"
             ]
         );
 
-        self::endForm("Envoyer !");
+        self::endForm("Envoyer !", "btn btn-primary");
         return $this->form;
     }
 }
