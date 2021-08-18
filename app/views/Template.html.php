@@ -28,7 +28,7 @@
     <?= $page_layout ?>
     <main>
     <?php if ($page_errors !== "") { ?>
-        <section id='errors' style='z-index:1500' class='w-100 h-auto d-flex flex-column align-items-center position-fixed top-0'><?= $page_errors ?></section>";  
+        <section id='errors' style='z-index:1500' class='w-100 h-auto d-flex flex-column align-items-center position-fixed top-0'><?= $page_errors ?></section> 
     <?php } ?>
     <?= $page_content ?>
     </main>
