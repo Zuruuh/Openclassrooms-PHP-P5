@@ -43,6 +43,11 @@ namespace Layout;
                             <i class="fab fa-github"></i> Github
                         </a>
                     </li>
+                    <li class="social-network">
+                        <a class='text-decoration-none list-unstyled text-dark h5' target="_blank" href="https://younes-ziadi.com/cv.pdf" class="social-network-link">
+                            <i class="fas fa-file-alt"></i> CV
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-3 col-sm-6 d-flex flex-column justify-content-end">
