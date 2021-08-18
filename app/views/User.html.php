@@ -11,10 +11,14 @@
  * @link     https://younes-ziadi.com/blog/
  */
 
- extract($values);
+extract($values);
 
- $viewer = \Utils\Http::isAdmin();
- $user_id = \Utils\Http::getParam("user", "get");
+$viewer = \Utils\Http::isAdmin();
+$user_id = \Utils\Http::getParam("user", "get");
+$self = false;
+if (\Utils\Http::getSession("user_id")) {
+    $self = intval(\Utils\Http::getSession("user_id")[0]) === intval($user_id);
+}
 ?>
 <div style="height:0;"></div>
 <section id="user" class='container-fluid px-5 pt-3 h-full'>
