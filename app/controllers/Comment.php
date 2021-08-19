@@ -84,11 +84,9 @@ class Comment extends \Controllers\Controller
                 $this->model->create($AUTHOR_ID, $POST_ID, $COMMENT_CONTENT, true);
                 \Utils\Errors::addError(\Utils\Constants::$COMMENT_POSTED, "success");
             } else {
-                \Utils\Errors::addError(\Utils\Constants::$COMMENT_POSTED_NOT_VERIFIED, "success");
                 $this->model->create($AUTHOR_ID, $POST_ID, $COMMENT_CONTENT);
+                \Utils\Errors::addError(\Utils\Constants::$COMMENT_POSTED_NOT_VERIFIED, "success");
             }
-            \Utils\Http::redirect("index.php?page=post&action=get&post=$POST_ID");
-            return;
         }
         \Utils\Http::redirect("index.php?page=post&action=get&post=$POST_ID");
     }
