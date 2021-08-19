@@ -66,17 +66,17 @@ class Renderer
             $page_errors = "";
         }
         ob_start();
-        include "app/views/" . $path . ".html.php";
+        include "app/Views/" . $path . ".html.php";
         $page_content = ob_get_clean();
 
         ob_start();
-        include "app/views/layout/Navbar.html.php";
+        include "app/Views/layout/Navbar.html.php";
         $page_layout = ob_get_clean();
 
         ob_start();
-        include "app/views/layout/Footer.html.php";
+        include "app/Views/layout/Footer.html.php";
         $page_footer = ob_get_clean();
 
-        include "app/views/Template.html.php";
+        include "app/Views/Template.html.php";
     }
 }
