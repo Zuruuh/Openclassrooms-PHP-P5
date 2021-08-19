@@ -98,7 +98,6 @@ class Comment extends \Models\Model
      */
     public function create(int $author_id, int $post_id, string $comment_content, bool $admin = false): void
     {
-        print_r($author_id);
         $query = $this->db->prepare("INSERT INTO `comments` VALUES (NULL, :author_id, :post_id, :comment_content, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :admin)");
         $query->bindValue(":author_id", $author_id);
         $query->bindValue(":post_id", $post_id);
