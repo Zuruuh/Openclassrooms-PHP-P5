@@ -439,20 +439,20 @@ class User extends \Controllers\Controller
             $first_name = $account["first_name"];
             $token = base64_encode($account["password"] . "|§§§|" . $EMAIL_ADRESS);
 
-            $mail = \Utils\Mail::initMail();
+            $mail = \Utils\Mailer::initMail();
 
             $config = parse_ini_file("config/config.ini", true);
 
             $WEBSITE_URL = $config["WEBSITE_URL"];
 
-            $mail .= \Utils\Mail::createElement("p", "Hello $first_name 👋", [], true);
-            $mail .= \Utils\Mail::createElement("p", "Il semblerais que vous ayez demandé à changer votre mot de passe.", [], true);
-            $mail .= \Utils\Mail::createElement("p", "Si c'est le cas, vous pouvez cliquer <a href='$WEBSITE_URL/index.php?page=user&action=forgotPassword&token=$token'>ici</a>", [], true);
-            $mail .= \Utils\Mail::createElement("p", "Si vous n'êtes pas à l'origine de cette action, vous pouvez ignorer ce message");
+            $mail .= \Utils\Mailer::createElement("p", "Hello $first_name 👋", [], true);
+            $mail .= \Utils\Mailer::createElement("p", "Il semblerais que vous ayez demandé à changer votre mot de passe.", [], true);
+            $mail .= \Utils\Mailer::createElement("p", "Si c'est le cas, vous pouvez cliquer <a href='$WEBSITE_URL/index.php?page=user&action=forgotPassword&token=$token'>ici</a>", [], true);
+            $mail .= \Utils\Mailer::createElement("p", "Si vous n'êtes pas à l'origine de cette action, vous pouvez ignorer ce message");
 
-            $mail .= \Utils\Mail::endMail();
+            $mail .= \Utils\Mailer::endMail();
 
-            \Utils\Mail::sendEmail(\Utils\Http::getParam("email"), "Oubli de mot de passe", $mail);
+            \Utils\Mailer::sendEmail(\Utils\Http::getParam("email"), "Oubli de mot de passe", $mail);
             \Utils\Errors::addError(\Utils\Constants::$EMAIL_SENT, "success");
             \Utils\Http::redirect("index.php");
         } else {
