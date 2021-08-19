@@ -13,6 +13,8 @@
 
 namespace Utils;
 
+use \Mail;
+
 /**
  * Mail Class
  * Class for ServerMail interactions
@@ -25,7 +27,7 @@ namespace Utils;
  * @link     https://younes-ziadi.com/blog/
  */
 
-class Mail
+class Mailer
 {
     /**
      * Sends an email
@@ -41,7 +43,20 @@ class Mail
         $headers  = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
         
-        mail($to, $subject, $content, $headers);
+        $config = parse_ini_file("config/config.ini", true);
+
+        $smtp = Mail::Factory(
+            "smtp",
+            [
+                "host" => $config["SMTP"],
+                "port" => $config["SMTP_PORT"],
+                "auth" => true,
+                "username" => $config["SMTP_USERNAME"],
+                "password" => $config["SMTP_PASSWORD"]
+            ]
+        );
+    
+        $smtp->send($to, $subject, $content, $headers);
     }
 
     /**
