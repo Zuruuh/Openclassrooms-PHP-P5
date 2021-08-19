@@ -11,10 +11,10 @@
  * @link     https://younes-ziadi.com/blog/
  */
 ?>
-<div style="height:0;"></div>
+<div style="height:0"></div>
 <section id="intro" class="d-flex align-items-center justify-content-start w-100 px-5">
     <div id="intro-left">
-        <a href="index.php?page=user&action=get&user=1" class="">
+        <a href="index.php?page=user&action=view&user=1" class="">
             <img src="./public/pictures/1.jpeg" class="rounded-circle border border-2 border-primary"/>
         </a>
     </div>
@@ -23,11 +23,11 @@
         <h3 class="text-left">Bienvenue sur mon Blog !</h3>
     </div>
 </section>
-<section id="portfolio" class="d-flex flex-column justify-content-center">
+<section id="projets" class="d-flex flex-column justify-content-center">
     <h2 class="text-center py-3">Mes projets 👇</h2>
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-sm-6 d-flex flex-column justify-content-center mb-2 card rounded">
+        <div class="col-md-4 col-sm-6 d-flex flex-column justify-content-center mb-2 card rounded">
                 <img src="./public/assets/dashboard.png" alt="" card="card-img-top">
                 <div class="card-body">
                     <span class="fw-bold card-title">Tableau de bord d'administration</span>
@@ -40,7 +40,7 @@
                 <img src="./public/assets/calculator.png" alt="" class="card-img-top">
                 <div class="card-body">
                     <span class="card-title fw-bold">Calculatrice JS</span>
-                    <p class="card-text">Calculatrice réalisée en javascript<br><br></p>
+                    <p class="card-text">Calculatrice réalisée en javascript</p>
                     <a class="btn btn-primary" href="https://younes-ziadi.com/projects/Calculator/HTML/" >Voir le projet</a>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                 <img src="./public/assets/credit.png" alt="" class="card-img-top">
                 <div class="card-body">
                     <span class="card-title fw-bold">Carte de crédit HTML</span>
-                    <p class="card-text">Copie de carte de crédit réalisée en HTML et CSS<br></p>
+                    <p class="card-text">Copie de carte de crédit réalisée en HTML et CSS</p>
                     <a href="https://younes-ziadi.com/projects/Credit/" class="btn btn-primary">Voir le projet</a>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                     <span class="card-title fw-bold">Table des Prix</span>
                     <p class="card-text">
                         Tableau de prix réalisé en HTML et CSS
-                        <br><br>
+                        
                     </p>
                     <a href="https://younes-ziadi.com/projects/PricingCards/HTML/" class="btn btn-primary">Voir le projet</a>
                 </div>
