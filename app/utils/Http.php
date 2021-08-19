@@ -219,31 +219,34 @@ class Http
      * @param string $TOKEN Token to validate
      * @param mixed  $model User model
      * 
-     * @return void
+     * @return int
      */
-    public static function validateToken(string $TOKEN, mixed $model): void
+    public static function validateToken(string $TOKEN, mixed $model): int
     {
         $TOKEN = base64_decode($TOKEN);
         if (!str_contains($TOKEN, "|§§§|")) {
             \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
             \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-            return;
+            return 0;
         }
 
         $TOKEN = explode("|§§§|", $TOKEN);
-        $EMAIL = $TOKEN[1];
-        $PASSWORD = $TOKEN[0];
+        $EMAIL = mb_convert_encoding($TOKEN[1], "ISO-8859-15");
+        $PASSWORD = mb_convert_encoding($TOKEN[0], "ISO-8859-15");
 
         $user = $model->findBy($EMAIL);
         if (!$user) {
             \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
             \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
+            return 0;
         }
 
         if ($user["password"] !== $PASSWORD) {
             \Utils\Errors::addError(\Utils\Constants::$INVALID_TOKEN);
             \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
+            return 0;
         }
+        return $user["id"];
     }
 
 }
