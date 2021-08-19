@@ -11,7 +11,7 @@
  * @link     https://younes-ziadi.com/blog/
  */
 
-require "app/utils/autoload.php";
+require "app/Utils/autoload.php";
 
 /**
  * App Class Doc 
