@@ -39,7 +39,7 @@ class Database
     {
         if (self::$_instance === null) {
             try {
-                $config = parse_ini_file("config/database.ini", true);
+                $config = parse_ini_file("config/config.ini", true);
     
                 self::$_instance = new \PDO(
                     "mysql:host=$config[HOSTNAME];dbname=$config[DBNAME];charset=utf8",
