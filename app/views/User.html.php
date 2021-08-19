@@ -82,7 +82,7 @@ if (\Utils\Http::getSession("user_id")) {
         <a href='index.php?page=user&action=edit' class='btn btn-primary mx-1 my-2'><i class='fas fa-user-edit'></i>&nbsp;Editer mon profil</a>
         <a href='index.php?page=user&action=changePassword' class='btn btn-primary mx-1 my-2'><i class="fas fa-asterisk"></i></i>&nbsp;Change mon mot de passe</a>
         <a href='index.php?page=user&action=changeUsername' class='btn btn-primary mx-1 my-2'><i class='fas fa-pen'></i>&nbsp;Changer mon pseudo</a>
-    <?php } else if ($viewer) { ?>
+    <?php } else if ($viewer && $user_role !== 'Administrateur') { ?>
         <a href="#" data-bs-toggle='modal' data-bs-target='#ban-modal' onclick='confirmBan(<?= $user_id ?>, "<?= $username ?>")' class='btn btn-dark text-light mx-1'><i class="fas fa-gavel"></i></i>&nbsp;Bannir</a>
     <?php } if ($viewer || $self) { ?>
         </section>
