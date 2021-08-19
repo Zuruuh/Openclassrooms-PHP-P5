@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic");
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  overflow-x: hidden !important;
+}
+
+body {
+  min-height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+main {
+  min-height: calc(100vh - 12.125rem);
+  height: auto;
+  background-color: #ddd;
+}
+
+.card-img-top {
+  aspect-ratio: 1;
+}
+
+.contact-form {
+  min-height: 130px;
+}
+
+#nav-user-button,
+#nav-user-profile-picture {
+  width: 75px;
+  height: 75px;
+}
+
+#nav-bar {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 700;
+}
+
+.nav-dropdown-item {
+  transition: color 0.15s ease-in-out;
+  max-width: 280px !important;
+}
+
+.nav-dropdown-item:hover {
+  color: #0b5ed7;
+  transition: color 0.15s ease-in-out;
+}
+
+#nav-bar .navbar-brand {
+  color: #fff;
+  font-size: 1.8rem;
+  transition: color 0.15s ease-in-out;
+}
+#nav-bar .navbar-brand:hover {
+  color: #0b5ed7;
+  transition: color 0.15s ease-in-out;
+}
+#nav-bar .navbar-nav {
+  margin-top: 0.5rem;
+}
+#nav-bar .navbar-nav li.nav-item a.nav-link {
+  color: #fff;
+}
+#nav-bar .navbar-nav li.nav-item a.nav-link:hover {
+  color: #0b5ed7;
+}
+#nav-bar .navbar-nav li.nav-item a.nav-link:active,
+#nav-bar .navbar-nav li.nav-item a.nav-link:focus {
+  color: #fff;
+}
+#nav-bar .navbar-nav li.nav-item a.nav-link.active {
+  color: #0b5ed7;
+}
+#nav-bar .navbar-toggler {
+  font-size: 80%;
+  padding: 0.8rem;
+}
+
+#intro {
+  height: calc(100vh - 116px);
+  color: #fafafa;
+  position: relative;
+  background: url("../assets/background.jpg") no-repeat center center/cover;
+  flex-direction: column;
+  padding-top: 5rem!important;
+}
+
+#intro::before {
+  content: "";
+  width: 100vw;
+  height: calc(100vh - 116px);
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#intro div {
+  z-index: 3;
+}
+
+#intro img {
+  height: 100%;
+  aspect-ratio: 1;
+}
+
+#intro-right {
+  margin-bottom: 15rem;
+  margin-left: 0;
+}
+
+#intro-left {
+  width: 80%;
+  aspect-ratio: 1;
+  margin-bottom: 1.5rem;
+}
+
+.admin-nav-link {
+  color: #f8f539 !important;
+}
+
+.admin-nav-link:hover {
+  color: #0b5ed7 !important;
+}
+
+footer {
+  background-color: #6c757d;
+}
+
+.social-network:hover a,
+.footer-nav-link:hover a {
+  color: #0b5ed7 !important;
+  text-decoration: underline !important;
+  transition: color 0.15s ease-in-out, text-decoration 0.15s ease-in-out;
+}
+
+.recents {
+  max-height: 50rem !important;
+}
+
+.recents-list {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  max-height: 95% !important;
+}
+
+.tag {
+  cursor: pointer;
+  max-width: fit-content;
+}
+
+.tag-hash {
+  background: #3f8bfd;
+  width: 25px;
+  height: 25px;
+}
+
+.profile-picture-sm {
+  width: 80px;
+  height: 80px;
+  display: none !important;
+}
+
+#user-info-container {
+  flex-direction: column !important;
+}
+
+#user-info-profile-picture {
+  width: 150px !important;
+  height: 150px !important;
+}
+#nav-bar .container-fluid {
+  padding: 0 1.2rem !important;
+}
+
+.dropdown-menu {
+  max-width: 280px !important;
+}
+
+.admin-comment {
+  margin: 0 1rem !important;
+}
+
+@media (min-width: 576px) {
+  #intro-left {
+    width: auto;
+    height: auto;
+    margin-bottom: 5rem;
+    flex-shrink: 1;
+  }
+
+  #intro-right {
+    margin-bottom: 15rem;
+    margin-left: 4rem;
+    flex-grow: 1;
+  }
+  
+  #nav-bar .container-fluid {
+    padding: 0 48px !important;
+  }
+  .admin-comment {
+    margin: 0 3rem !important;
+    max-width: 1400px !important;
+  }
+  .profile-picture-sm {
+    display: block !important;
+  }
+}
+
+@media (min-width: 992px) {
+  #intro {
+    flex-direction: row !important;
+  }
+  #nav-bar {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    transition: padding-top 0.3s, padding-bottom 0.3s;
+  }
+  #nav-bar .navbar-brand {
+    font-size: 1.75em;
+    transition: font-size 0.3s;
+  }
+  #nav-bar .navbar-nav {
+    margin-top: 0;
+  }
+
+  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:active,
+  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:focus,
+  #nav-bar .navbar-nav > li.nav-item > a.nav-link.active:hover {
+    color: #fff;
+    background: #0b5ed7;
+  }
+
+  #nav-bar.navbar-shrink {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  #nav-bar.navbar-shrink .navbar-brand {
+    font-size: 1.5em;
+  }
+  #user-info-container {
+    flex-direction: row !important;
+  }
+  #user-info-profile-picture {
+    width: 300px !important;
+    height: 300px !important;
+  }
+}
