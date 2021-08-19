@@ -85,14 +85,14 @@ class Contact extends Controller
 
         // ! 2 => Prepare mail
     
-        $mail = \Utils\Mail::initMail();
-        $mail .= \Utils\Mail::createElement("p", "Blog - Mail Recu de la part de: $NAME", [], true);
-        $mail .= \Utils\Mail::createElement("p", "Adresse pour reprise de contact: $EMAIL", [], true);
-        $mail .= \Utils\Mail::createElement("p", "$MESSAGE_CONTENT");
+        $mail = \Utils\Mailer::initMail();
+        $mail .= \Utils\Mailer::createElement("p", "Blog - Mail Recu de la part de: $NAME", [], true);
+        $mail .= \Utils\Mailer::createElement("p", "Adresse pour reprise de contact: $EMAIL", [], true);
+        $mail .= \Utils\Mailer::createElement("p", "$MESSAGE_CONTENT");
 
-        $config = parse_ini_file("config/database.ini", true);
+        $config = parse_ini_file("config/config.ini", true);
 
-        \Utils\Mail::sendEmail($config["BLOG_MASTER_EMAIL"], $SUBJECT, $mail);
+        \Utils\Mailer::sendEmail($config["BLOG_MASTER_EMAIL"], $SUBJECT, $mail);
 
         // ? Redirect with confirmation message
         \Utils\Http::redirect("index.php");
