@@ -43,13 +43,8 @@ class User extends \Controllers\Controller
         $user_id = intval(\Utils\Http::getParam("user", "get"));
         $user = $this->model->find($user_id);
 
-        $username = $user["username"]; 
-        $user_path = $user["profile_picture_path"];
-        $user_description = $user["description"];
-        $user_location = $user["location"];
+        extract($user);
         $user_role = $user["is_admin"] ? "Administrateur" : "Membre";
-        $user_register_date = $user["register_date"];
-        $user_birthday = $user["birthday"];
 
         if (!$user) {
             \Utils\Errors::addError(\Utils\Constants::$USER_DO_NOT_EXIST);
@@ -64,7 +59,7 @@ class User extends \Controllers\Controller
             $self = true;
         } 
 
-        \Utils\Renderer::render("User", "Blog - $username", ["errors" => [], "values" => ["username" => $username, "user_path" => $user_path, "user_description" => $user_description, "user_location" => $user_location, "user_role" => $user_role, "user_register_date" => $user_register_date, "user_birthday" => $user_birthday, "self" => $self]], []);
+        \Utils\Renderer::render("User", "Blog - $username", ["errors" => [], "values" => ["username" => $username, "user_path" => $profile_picture_path, "user_description" => $user_description, "user_location" => $user_location, "user_role" => $user_role, "user_register_date" => $user_register_date, "user_birthday" => $user_birthday, "self" => $self]], []);
     }
 
     /**
