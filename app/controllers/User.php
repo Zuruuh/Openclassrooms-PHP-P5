@@ -335,7 +335,7 @@ class User extends \Controllers\Controller
         if (\Utils\Http::getParam("token", "get")) {
             if (\Utils\Http::getParam("password") && \Utils\Http::getParam("password_conf")) {
                 $TOKEN = htmlspecialchars(\Utils\Http::getParam("token", "get"));
-                \Utils\Http::validateToken($TOKEN, $this->model);
+                $user = \Utils\Http::validateToken($TOKEN, $this->model);
 
                 $errors = array();
 
@@ -371,9 +371,9 @@ class User extends \Controllers\Controller
                     );
                 } else {
                     $hashed = password_hash($NEW_PASSWORD, PASSWORD_BCRYPT);
-                    $this->model->updatePassword($hashed, $user["id"]);
+                    $this->model->updatePassword($hashed, $user);
                     \Utils\Errors::addError(\Utils\Constants::$PASSWORD_CHANGE_SUCCESS, "success");
-                    \Utils\Http::setSession("user_id", $user_id . "|" . $hashed);
+                    \Utils\Http::setSession("user_id", $user . "|" . $hashed);
                     \Utils\Http::redirect("index.php");
                 }
 
@@ -427,7 +427,6 @@ class User extends \Controllers\Controller
             if (!filter_var($EMAIL_ADRESS, FILTER_VALIDATE_EMAIL)) {
                 \Utils\Errors::addError(\Utils\Constants::$EMAIL_INVALID);
                 \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                return;
             } 
 
             $account = $this->model->findBy($EMAIL_ADRESS);
@@ -435,7 +434,6 @@ class User extends \Controllers\Controller
             if (!$account) {
                 \Utils\Errors::addError(\Utils\Constants::$EMAIL_NOT_USED);
                 \Utils\Http::redirect("index.php?page=user&action=forgotPassword");
-                return;
             }
 
             $first_name = $account["first_name"];
@@ -443,9 +441,13 @@ class User extends \Controllers\Controller
 
             $mail = \Utils\Mail::initMail();
 
+            $config = parse_ini_file("config/config.ini", true);
+
+            $WEBSITE_URL = $config["WEBSITE_URL"];
+
             $mail .= \Utils\Mail::createElement("p", "Hello $first_name 👋", [], true);
             $mail .= \Utils\Mail::createElement("p", "Il semblerais que vous ayez demandé à changer votre mot de passe.", [], true);
-            $mail .= \Utils\Mail::createElement("p", "Si c'est le cas, vous pouvez cliquer <a href='http://localhost/index.php?page=user&action=forgotPassword&token=$token'>ici</a>", [], true);
+            $mail .= \Utils\Mail::createElement("p", "Si c'est le cas, vous pouvez cliquer <a href='$WEBSITE_URL/index.php?page=user&action=forgotPassword&token=$token'>ici</a>", [], true);
             $mail .= \Utils\Mail::createElement("p", "Si vous n'êtes pas à l'origine de cette action, vous pouvez ignorer ce message");
 
             $mail .= \Utils\Mail::endMail();
@@ -533,21 +535,18 @@ class User extends \Controllers\Controller
                 [
                     "name" => "old_password",
                     "type" => "password",
-                    "label" => "Entrez votre ancien mot de passe",
-                    "placeholder" => "Mot de passe...",
+                    "placeholder" => "Entrez votre ancien mot de passe..",
                     "class" => "p-2 my-1 col-md-6"
                 ],
                 [
                     "name" => "password",
                     "type" => "password",
-                    "label" => "Choisissez un nouveau mot de passe",
-                    "placeholder" => "Mot de passe...",
+                    "placeholder" => "Choisissez un nouveau mot de passe..",
                     "class" => "p-2 my-1 col-md-6"
                 ],
                 [
                     "name" => "password_conf",
                     "type" => "password",
-                    "label" => "Confirmez votre nouveau mot de passe",
                     "placeholder" => "Confirmez votre mot de passe",
                     "class" => "p-2 my-1 col-md-6"
                 ]
