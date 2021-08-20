@@ -139,6 +139,10 @@ class Http
         }
 
         if ($sess[1] === $user["password"]) {
+            if (intval($user["disabled"]) === 0) {
+                self::unsetSession("user_id");
+                return false;
+            }
             return true;
         }
         return false;
