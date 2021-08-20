@@ -1,5 +1,5 @@
 # BLOG
-
+[![Codacy Badge](https://bit.ly/2UwnMKg)](https://bit.ly/3z8SRmo)
 ##  Installation
 *This project has been created with PHP 8.09 and has not been tested with prior versions. It is highly recommended to use at least PHP 8.*
 
