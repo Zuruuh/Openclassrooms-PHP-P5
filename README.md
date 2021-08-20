@@ -7,4 +7,5 @@
 
 1. Clone this repository to your local machine.
 2. Extract it and head into the config directory.
-3. Open the default config.ini file and edit the database and mailing settings to match yours.
+3. Open the default example-config.ini file and edit the database and mailing settings to match yours.
+4. Once you are done with the configuration, rename the "example-config.ini" to "config.ini".
