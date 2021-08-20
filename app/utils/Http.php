@@ -140,6 +140,7 @@ class Http
 
         if ($sess[1] === $user["password"]) {
             if (intval($user["disabled"]) === 0) {
+                // ! User was banned, unset session
                 self::unsetSession("user_id");
                 return false;
             }
