@@ -59,7 +59,7 @@ class User extends \Controllers\Controller
             $self = true;
         } 
 
-        \Utils\Renderer::render("User", "Blog - $username", ["errors" => [], "values" => ["username" => $username, "user_path" => $profile_picture_path, "user_description" => $user_description, "user_location" => $user_location, "user_role" => $user_role, "user_register_date" => $user_register_date, "user_birthday" => $user_birthday, "self" => $self]], []);
+        \Utils\Renderer::render("User", "Blog - $username", ["errors" => [], "values" => ["username" => $username, "user_path" => $profile_picture_path, "user_description" => $description, "user_location" => $location, "user_role" => $user_role, "user_register_date" => $register_date, "user_birthday" => $birthday, "self" => $self]], []);
     }
 
     /**
