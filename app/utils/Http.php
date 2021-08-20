@@ -138,7 +138,7 @@ class Http
             return false;
         }
 
-        if ($sess[1] === $user["password"]) {
+        if ($sess[1] === $user["password"] && intval($user["disabled"]) === 0) {
             return true;
         }
         return false;
