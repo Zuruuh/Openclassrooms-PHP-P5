@@ -1,0 +1,1 @@
+Lien public repo codacy: https://app.codacy.com/gh/Zuruuh/blog-p5/dashboard
