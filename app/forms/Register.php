@@ -39,7 +39,6 @@ class Register extends \Forms\Form
         self::createField(
             [
             "name" => "first_name",
-            "label" => "Entrez votre prénom: ",
             "type" => "text",
             "maxlength" => \Utils\Constants::$MAX_NAME_LENGTH,
             "placeholder" => "Votre prénom..",
@@ -51,7 +50,6 @@ class Register extends \Forms\Form
         self::createField(
             [
             "name" => "last_name",
-            "label" => "Entrez votre nom: ",
             "type" => "text",
             "maxlength" => \Utils\Constants::$MAX_NAME_LENGTH,
             "placeholder" => "Votre nom..",
@@ -63,7 +61,6 @@ class Register extends \Forms\Form
         self::createField(
             [
             "name" => "username",
-            "label" => "Entrez votre pseudonyme: ",
             "type" => "text",
             "maxlength" => \Utils\Constants::$MAX_USERNAME_LENGTH,
             "minlength" => \Utils\Constants::$MIN_USERNAME_LENGTH,
@@ -76,7 +73,6 @@ class Register extends \Forms\Form
         self::createField(
             [
             "name" => "email",
-            "label" => "Entrez votre adresse mail: ",
             "type" => "email",
             "maxlength" => \Utils\Constants::$MAX_EMAIL_LENGTH,
             "placeholder" => "Votre adresse mail..",
@@ -88,7 +84,6 @@ class Register extends \Forms\Form
         self::createField(
             [
             "name" => "password",
-            "label" => "Entrez votre mot de passe: ",
             "type" => "password",
             "placeholder" => "Votre mot de passe..",
             "required" => true,
@@ -99,9 +94,8 @@ class Register extends \Forms\Form
         self::createField(
             [
             "name" => "password_conf",
-            "label" => "Confirmez votre mot de passe: ",
             "type" => "password",
-            "placeholder" => "Votre mot de passe..",
+            "placeholder" => "Confirmez votre mot de passe..",
             "required" => true,
             "class" => "p-2 my-1 col-md-6"
             ]
@@ -110,7 +104,6 @@ class Register extends \Forms\Form
         self::createField(
             [
             "name" => "birthday",
-            "label" => "Votre date de naissance: ",
             "type" => "date",
             "placeholder" => "Votre anniversaire..",
             "required" => true,
