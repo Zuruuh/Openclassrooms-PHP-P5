@@ -13,6 +13,8 @@
 
 namespace Models;
 
+use \PDO;
+
 /**
  * Comment Model Class
  * Model for Comment data manipulation
@@ -105,7 +107,8 @@ class Comment extends \Models\Model
         if ($admin) {
             $query->bindValue(":admin", 1);
         } else {
-            $query->bindValue(":admin", "NULL");
+            $null = null;
+            $query->bindValue(":admin", $null, \PDO::PARAM_NULL);
         }
         $query->execute();
 
