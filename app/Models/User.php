@@ -66,16 +66,19 @@ class User extends \Models\Model
         string $password,
         string $birthday
     ):string {
-        // ! RETURN ID + ";" + HASH OF PASSWORD
-        $query = $this->db->prepare("INSERT INTO `users` VALUES (NULL, :first_name, :last_name, :username, :email, :password, 'default.png' , NULL, NULL, CURRENT_TIMESTAMP, :birthday, 0, 0)");
+        // ! RETURN ID & HASHED_PASSWORD
+
+        $default_profile_picture = \Utils\Constants::$DEFAULT_IMAGE;
+
+        $query = $this->db->prepare("INSERT INTO `users` VALUES (NULL, :first_name, :last_name, :username, :email, :password, :profile_picture , NULL, NULL, CURRENT_TIMESTAMP, :birthday, 0, 0)");
         
         $query->bindValue(":first_name", $first_name);
         $query->bindValue(":last_name", $last_name);
         $query->bindValue(":username", $username);
         $query->bindValue(":email", $email);
         $query->bindValue(":password", $password);
+        $query->bindValue(":profile_picture", $default_profile_picture);
         $query->bindValue(":birthday", $birthday);
-        
         $query->execute();
         $id = $this->db->lastInsertId();
         return("$id|$password");
@@ -162,18 +165,6 @@ class User extends \Models\Model
         $query = $this->db->prepare("SELECT is_admin FROM users WHERE id=:id");
         $query->execute([":id" => $id]);
         return $query->fetch()["is_admin"];
-    }
-
-    /**
-     * Returns exact path to profile picture
-     * 
-     * @param string $path Profile Picture name
-     * 
-     * @return string
-     */
-    public function getExactPath(string $path): string
-    {
-        return "./public/pictures/$path";
     }
 
     /**
