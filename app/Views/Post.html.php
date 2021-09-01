@@ -12,10 +12,7 @@
  */
 
 extract($post);
-$user_id = null;
-if (\Utils\Http::isSessionCorrect()) {
-    $user_id = \Utils\Http::getSession('user_id')[0];
-}
+$user_id = \Utils\Http::isSessionCorrect() ? \Utils\Http::isSessionCorrect() : null;
 ?>
 
 <div style="height:0;"></div>
@@ -58,7 +55,7 @@ if (\Utils\Http::isSessionCorrect()) {
         ?>
     </div>
     <div id='comments-pagination'>
-        <ul class='list-group'>
+        <ul class='list-group my-2'>
         <?php 
         foreach ($comments as $comment) {
             echo $comment;

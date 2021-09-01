@@ -15,7 +15,7 @@
 <section id="intro" class="d-flex align-items-center justify-content-start w-100 px-5">
     <div id="intro-left">
         <a href="index.php?page=user&action=view&user=1" class="">
-            <img src="./public/pictures/1.jpeg" class="rounded-circle border border-2 border-primary"/>
+            <img src="./public/assets/me.jpeg" id="hero-image" class="rounded-circle border border-2 border-primary"/>
         </a>
     </div>
     <div id="intro-right">

@@ -73,9 +73,9 @@ class Admin extends Controller
         foreach ($posts as $post) {
             extract($post);
             $user_name = $user_model->getUsername($author_id);
-            $exact_path = $user_model->getExactPath($user_model->getProfilePicture($author_id));
+            $exact_path = $user_model->getProfilePicture($author_id);
             $element  = "<div class='post-preview d-flex w-100 my-4 border rounded-1 px-2 h-auto'>";
-            $element .= "<img src='$exact_path' alt='$user_name's profile' class='rounded-circle w-25 h-25 p-2' />";
+            $element .= "<img src='./public/$exact_path' alt='$user_name's profile' class='rounded-circle w-25 h-25 p-2' />";
             $element .= "<div class='d-flex flex-grow-1 flex-column justify-content-between py-2'><em>$title</em>";
             $element .= "<p class='pe-4'>$overview</p>";
             $element .= "<div class='d-flex justify-content-between align-items-end'>";
@@ -87,9 +87,9 @@ class Admin extends Controller
 
         foreach ($users as $user) {
             extract($user);
-            $exact_path = $user_model->getExactPath($user_model->getProfilePicture($id));
+            $exact_path = $user_model->getProfilePicture($id);
             $element  = "<div class='user-preview d-flex w-100 my-4 border rounded-1 px-2 h-auto'>";
-            $element .= "<img src='$exact_path' alt='$user_name's profile' class='rounded-circle w-25 h-25 p-2' />";
+            $element .= "<img src='./public/$exact_path' alt='$username's profile' class='rounded-circle w-25 h-25 p-2' />";
             $element .= "<div><p><a href='index.php?page=user&action=view&user=$id'>$username</a></p>";
             $element .= "<div><p>$first_name</p>";
             $element .= "<p>$last_name</p></div></div></div>";
@@ -99,11 +99,11 @@ class Admin extends Controller
         foreach ($comments as $comment) {
             extract($comment);
             $user_name = $user_model->getUsername($author_id);
-            $exact_path = $user_model->getExactPath($user_model->getProfilePicture($author_id));
+            $exact_path = $user_model->getProfilePicture($author_id);
             $post_name = $post_model->getTitle($post_id);
 
             $element  = "<div class='comment-preview d-flex w-100 my-4 border rounded-1 px-2 h-auto'>";
-            $element .= "<img src='$exact_path' alt='$user_name's profile' class='rounded-circle w-25 h-25 p-2' />";
+            $element .= "<img src='./public/$exact_path' alt='$user_name's profile' class='rounded-circle w-25 h-25 p-2' />";
             $element .= "<div><p><a href='index.php?page=user&action=view&user=$id'>$username</a></p>";
             $element .= "<p>$comment_content</p>";
             $element .= "<p><i>Post: </i><a href='index.php?page=post&action=get&post=$post_id'>$post_name</a></p></div></div>";
@@ -180,7 +180,7 @@ class Admin extends Controller
             foreach ($comments_raw_data as $comment_raw_data) {
                 $user = $user_model->find($comment_raw_data["author_id"]); 
                 $comment_element = \Utils\ElementBuilder::buildAdminComment(
-                    $user_model->getExactPath($user["profile_picture_path"]),
+                    $user["profile_picture_path"],
                     $user["username"],
                     $user["id"],
                     $comment_raw_data["comment_content"],

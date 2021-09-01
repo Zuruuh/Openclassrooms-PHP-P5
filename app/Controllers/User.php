@@ -287,7 +287,7 @@ class User extends \Controllers\Controller
                         $user_id,
                         htmlspecialchars(\Utils\Http::getParam("first_name")),
                         htmlspecialchars(\Utils\Http::getParam("last_name")),
-                        $NEW_PATH,
+                        "pictures/" . $NEW_PATH,
                         htmlspecialchars(\Utils\Http::getParam("description")),
                         htmlspecialchars(\Utils\Http::getParam("location"))
                     );
@@ -482,15 +482,8 @@ class User extends \Controllers\Controller
      */
     public function changePassword(): void
     {
-        if (!\Utils\Http::getSession("user_id")) {
-            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED, "primary");
-            \Utils\Http::redirect("index.php");
-        }
+        \Utils\Http::memberPage();
 
-        if (!\Utils\Http::isSessionCorrect()) {
-            \Utils\Errors::addError(\Utils\Constants::$INVALID_SESSION);
-            \Utils\Http::redirect("index.php");
-        }
         if (\Utils\Http::getParam("submit")) {
 
             $PASSWORD = htmlspecialchars(\Utils\Http::getParam("password"));
@@ -568,15 +561,8 @@ class User extends \Controllers\Controller
      */
     public function changeUsername(): void
     {
-        if (!\Utils\Http::getSession("user_id")) {
-            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED, "primary");
-            \Utils\Http::redirect("index.php");
-        }
+        \Utils\Http::memberPage();
 
-        if (!\Utils\Http::isSessionCorrect()) {
-            \Utils\Errors::addError(\Utils\Constants::$INVALID_SESSION);
-            \Utils\Http::redirect("index.php");
-        }
         if (\Utils\Http::getParam("submit")) {
 
             $PASSWORD = htmlspecialchars(\Utils\Http::getParam("password"));

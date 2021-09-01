@@ -188,7 +188,21 @@ footer {
   margin: 0 1rem !important;
 }
 
+#hero-image {
+  max-width: 200px;
+}
+
+#intro-left {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 576px) {
+  #hero-image {
+    max-width: 500px;
+  }
+
   #intro-left {
     width: auto;
     height: auto;

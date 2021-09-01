@@ -83,7 +83,7 @@ class ElementBuilder
         bool $own
     ): string {
         $comment_element  = "<li class='comment list-group-item'><div class='comment-body d-flex w-100' id='comment-$id'>";
-        $comment_element .= "<div class='pe-3'><img class='profile-picture-sm rounded-circle' src='$path' alt='$username' /></div>";
+        $comment_element .= "<div class='pe-3'><img class='profile-picture-sm rounded-circle' src='./public/$path' alt='$username' /></div>";
         $comment_element .= "<div class='w-100'><div class='d-flex align-items-center justify-content-between w-100'>";
         $comment_element .= "<div><a href='index.php?page=user&action=view&user=$user_id' class='pe-1'><b>$username</b></a>";
         $comment_element .= "<i> le $post_date</i></div>";
@@ -113,7 +113,7 @@ class ElementBuilder
     public static function buildAdminComment(string $path, string $username, string $user_id, string $content, string $post_date, string $last_update, int $comment_id): string 
     {
         $comment_element  = "<tr class='admin-comment d-flex list-group-item justify-content-between mx-5'><th class='comment d-flex flex-column'>";
-        $comment_element .= "<div class='d-flex'><img class='profile-picture-sm rounded-circle me-3 mt-2' src='$path' alt='$username' />";
+        $comment_element .= "<div class='d-flex'><img class='profile-picture-sm rounded-circle me-3 mt-2' src='./public/$path' alt='$username' />";
         $comment_element .= "<div class='comment-info d-flex flex-column'>";
         $comment_element .= "<a href='index.php?page=user&action=view&user=$user_id'><b>$username</b></a>";
         $comment_element .= "<i class='text-secondary'> le $post_date</i>";
