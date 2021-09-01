@@ -26,6 +26,7 @@ namespace Controllers;
  */
 class Home extends Controller
 {
+    
     /**
      * Returns default home page
      * 
@@ -33,29 +34,6 @@ class Home extends Controller
      */
     public function view(): void
     {
-        $post_elements = array();
-
-        $post_model = new \Models\Post();
-        $user_model = new \Models\User();
-
-        $posts = $post_model->get(0, 3);
-
-        foreach ($posts as $post) {
-            extract($post);
-            $author_username = $user_model->getUsername($author_id);
-            array_push(
-                $post_elements, 
-                \Utils\ElementBuilder::buildPost(
-                    $id,
-                    $author_id,
-                    $author_username,
-                    $post_date,
-                    $title,
-                    $overview
-                )
-            );
-        }
-
-        \Utils\Renderer::render("Home", "Blog - Page d'accueil", ["posts" => $post_elements], ["\Forms\Contact"]);
+        \Utils\Renderer::render("Home", "Blog - Page d'accueil", [], ["\Forms\Contact"]);
     }
 }

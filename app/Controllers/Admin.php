@@ -35,8 +35,15 @@ class Admin extends Controller
     public function dashboard(): void
     {
         // ? Stats dernières 168h (Commentaires + posts), Posts récents (-1 semaine)
-        \Utils\Http::memberPage();
-        \Utils\Http::privatePage();
+        if (!\Utils\Http::isSessionCorrect()) {
+            \Utils\Errors::addError(\Utils\Constants::$INVALID_SESSION);
+            \Utils\Http::redirect("index.php");
+        }
+
+        if (!\Utils\Http::isAdmin()) {
+            \Utils\Errors::addError(\Utils\Constants::$USER_IS_NOT_ADMIN);
+            \Utils\Http::redirect("index.php");
+        }
 
         $post_model = new \Models\Post();
         $user_model = new \Models\User();
@@ -125,8 +132,15 @@ class Admin extends Controller
     {
         // ? Liste commentaires invalidés + Pagination ?
 
-        \Utils\Http::memberPage();
-        \Utils\Http::privatePage();
+        if (!\Utils\Http::isSessionCorrect()) {
+            \Utils\Errors::addError(\Utils\Constants::$INVALID_SESSION);
+            \Utils\Http::redirect("index.php");
+        }
+
+        if (!\Utils\Http::isAdmin()) {
+            \Utils\Errors::addError(\Utils\Constants::$USER_IS_NOT_ADMIN);
+            \Utils\Http::redirect("index.php");
+        }
 
         $comment_model = new \Models\Comment(); 
 
@@ -201,29 +215,39 @@ class Admin extends Controller
      */
     public function ban(): void
     {
-        \Utils\Http::memberPage();
-        \Utils\Http::privatePage();
-        \Utils\Http::checkParam(\Utils\Http::getParam("user", "get"), \Utils\Constants::$MISSING_USER_URL_PARAM);
+        if (!\Utils\Http::isSessionCorrect()) {
+            \Utils\Errors::addError(\Utils\Constants::$INVALID_SESSION);
+            \Utils\Http::redirect("index.php");
+        }
 
+        if (!\Utils\Http::isAdmin()) {
+            \Utils\Errors::addError(\Utils\Constants::$USER_IS_NOT_ADMIN);
+            \Utils\Http::redirect("index.php");
+        }
+
+        if (!\Utils\Http::getParam("user", "get")) {
+            // ? User not specified
+            \Utils\Errors::addError(\Utils\Constants::$MISSING_USER_PARAM);
+            \Utils\Http::redirect("index.php?page=admin&action=validate");
+        }
 
         $user_model = new \Models\User();
         $USER_ID = intval(\Utils\Http::getParam("user", "get"));
         $user = $user_model->find($USER_ID);
 
-        $sess = intval(\Utils\Http::isSessionCorrect());
+        $sess = intval(\Utils\Http::getSession("user_id")[0]);
 
-        if (!$user) {
-            // ? User does not exist
-            \Utils\Errors::addError(\Utils\Constants::$USER_DO_NOT_EXIST, "primary");
-            \Utils\Http::redirect("index.php?page=admin&action=validate");
-        }
-        print_r($sess . " test " . $USER_ID);
         if ($sess === $USER_ID) {
             // ? User is banning himself
             \Utils\Errors::addError(\Utils\Constants::$SELF_BAN, "primary");
             \Utils\Http::redirect("index.php?page=admin&action=validate");
         }
 
+        if (!$user) {
+            // ? User does not exist
+            \Utils\Errors::addError(\Utils\Constants::$USER_DO_NOT_EXIST, "primary");
+            \Utils\Http::redirect("index.php?page=admin&action=validate");
+        }
 
         $comment_model = new \Models\Comment();
         $comment_model->deleteAllUserComments($USER_ID);
@@ -250,6 +274,7 @@ class Admin extends Controller
         // ? User has been banned 
         \Utils\Errors::addError(\Utils\Constants::$BAN_SUCCESS, "dark");
         \Utils\Http::redirect("index.php?page=admin&action=validate");
+
     }
 
 }
