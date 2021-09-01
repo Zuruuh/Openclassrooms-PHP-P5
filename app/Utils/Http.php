@@ -120,9 +120,9 @@ class Http
     /**
      * Verifies if session is correct
      * 
-     * @return bool
+     * @return bool|int
      */
-    public static function isSessionCorrect(): bool
+    public static function isSessionCorrect(): bool|int
     {
         $sess = self::getSession("user_id");
         if (!$sess) {
@@ -132,20 +132,25 @@ class Http
             return false;
         }
         $sess = explode("|", self::getSession("user_id"));
+        $id = intval($sess[0]);
+        $password = $sess[1];
+        
         $user_model = new \Models\User();
-        $user = $user_model->find((int) $sess[0]);
+        $user = $user_model->find($id);
         if (!$user) {
             return false;
         }
 
-        if ($sess[1] === $user["password"]) {
+        if ($password === $user["password"]) {
             if (intval($user["disabled"]) === 1) {
                 // ! User was banned, unset session
                 self::unsetSession("user_id");
                 return false;
             }
-            return true;
+            // ? Password is correct
+            return $id;
         }
+        // Password is incorrect
         return false;
     }
 
@@ -252,6 +257,62 @@ class Http
             return 0;
         }
         return $user["id"];
+    }
+    /**
+     * Redirects non-logged users to home page
+     * 
+     * @return void
+     */
+    public static function memberPage(): void
+    {
+        if (!self::isSessionCorrect()) {
+            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
+            self::redirect("index.php");
+        }
+    }
+
+    /**
+     * Redirects non-admin users to home page
+     * 
+     * @return void
+     */
+    public static function privatePage(): void
+    {
+        if (!self::isAdmin()) {
+            \Utils\Errors::addError(\Utils\Constants::$USER_IS_NOT_ADMIN);
+            \Utils\Http::redirect("index.php");
+        }
+    }
+
+    /**
+     * Checks if a param exists & returns an error if it doesn't
+     * 
+     * @param mixed  $param         The param to check for
+     * @param string $error_message The error message to return in case the param does not exist
+     * 
+     * @return void 
+     */
+    public static function checkParam(mixed $param, string $error_message): void
+    {
+        if (!$param) {
+            \Utils\Errors::addError($error_message);
+            \Utils\Http::redirect("index.php");
+        }
+    }
+
+    /**
+     * Redirects users that are already logged in
+     * 
+     * @param string $error_message The error to display on redirect
+     * 
+     * @return void
+     */
+    public static function visitorPage(string $error_message): void
+    {
+        if (self::isSessionCorrect()) {
+            \Utils\Errors::addError($error_message, "primary");
+            self::redirect("index.php");
+        }
     }
 
 }
