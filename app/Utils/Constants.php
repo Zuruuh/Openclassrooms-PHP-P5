@@ -80,7 +80,7 @@ abstract class Constants
   
     public static $IMAGE_TYPE = "Votre image doit être au format JPEG ou PNG !";
     public static $IMAGE_TOO_HEAVY = "Votre image est trop lourde (Max 512Ko).";
-    public static $DEFAULT_IMAGE = "default.png";
+    public static $DEFAULT_IMAGE = "assets/default.png";
 
     public static $USER_DO_NOT_EXIST = "Cet utilisateur n'existe pas !";
     public static $ALREADY_LOGGED_IN = "Vous êtes déjà connecté !";
