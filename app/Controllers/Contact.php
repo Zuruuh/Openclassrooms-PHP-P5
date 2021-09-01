@@ -96,8 +96,6 @@ class Contact extends Controller
 
         // ? Redirect with confirmation message
         \Utils\Http::redirect("index.php");
-
-
-
+        \Utils\Errors::createError(\Utils\Constants::$CONTACT_SUCCESS, "success");
     }
 }

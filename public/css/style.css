@@ -7,6 +7,7 @@
 
 html {
   overflow-x: hidden !important;
+  height: 100vh;
 }
 
 body {
@@ -24,6 +25,8 @@ main {
 
 .card-img-top {
   aspect-ratio: 1;
+  max-height: 294px;
+  max-width: 294px;
 }
 
 .contact-form {
@@ -84,7 +87,8 @@ main {
 }
 
 #intro {
-  height: calc(100vh - 116px);
+  height: auto;
+  min-height: calc(100vh - 116px);
   color: #fafafa;
   position: relative;
   background: url("../assets/background.jpg") no-repeat center center/cover;

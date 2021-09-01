@@ -74,94 +74,91 @@ class Post extends Controller
      */
     public function get():void
     {
-        if (\Utils\Http::getParam("post", "get")) {
-            $post = $this->model->find(intval(\Utils\Http::getParam("post", "get")));
-            if (!$post) {
-                \Utils\Errors::addError(\Utils\Constants::$POST_DO_NOT_EXIST);
-                \Utils\Http::redirect("index.php?page=post&action=view");
-            }
-            $user_model = new \Models\User();
-            $author = $user_model->getUsername($post["author_id"]);
-            
-            $post["post_date"] = str_replace(" ", " à ", $post["post_date"]);
-            $post["last_modified"] = str_replace(" ", " à ", $post["last_modified"]);
+        \Utils\Http::checkParam(\Utils\Http::getParam("post", "get"), \Utils\Constants::$MISSING_POST_URL_PARAM);
 
-            if ($post["tags"] === "NULL") {
-                $post["tags"] = "";
-            } else {
-                $tags = explode("#", $post["tags"]);
-                unset($tags[0]);
-                $post["tags"] = "";
-
-                foreach ($tags as $tag) {
-                    $post["tags"] .= \Utils\ElementBuilder::buildTag($tag);
-                }
-            }
-
-            
-
-            $title = $post["title"];
-
-            $comment_model = new \Models\Comment();
-
-            $PAGE = intval(\Utils\Http::getParam('pagination', "get"));
-            $POST_ID = intval(\Utils\Http::getParam("post", "get"));
-
-            $comment_number = $comment_model->countPostComments($POST_ID);
-            if (!$PAGE) {
-                $PAGE = 1;
-            }
-            $PAGINATION = \Utils\Pagination::paginate("index.php?page=post&action=get&post=$POST_ID&pagination=", $comment_number, 15, $PAGE);
-            
-            $pagination_params = $PAGINATION["request_params"];
-
-            $comments = $comment_model->getPostComments($POST_ID, $pagination_params["offset"], $pagination_params["limit"]); 
-
-            
-            $comments_elements = array();
-
-            foreach ($comments as $comment) {
-                $comment["post_date"] = str_replace(" ", " à ", $comment["post_date"]);
-                $comment["last_modified"] = str_replace(" ", " à ", $comment["last_modified"]);
-                $comment_author = $user_model->find($comment["author_id"]);
-                $own = false;
-
-                if (\Utils\Http::isSessionCorrect()) {
-                    if (intval(\Utils\Http::getSession("user_id")) === intval($comment["author_id"])) {
-                        $own = true;
-                    }
-                }
-
-                $comment_element = \Utils\ElementBuilder::buildComment(
-                    $comment["profile_picture_path"],
-                    $comment_author["username"],
-                    $comment["author_id"],
-                    $comment["comment_content"],
-                    $comment["post_date"],
-                    $comment["last_modified"],
-                    $comment["id"],
-                    $own
-                );
-                array_push($comments_elements, $comment_element);
-                
-            }
-
-            $POST_ID = \Utils\Http::getParam("post", "get");
-            \Utils\Renderer::render(
-                "Post", "Blog - $title", [
-                    "author" => $author,
-                    "post" => $post,
-                    "comments" => $comments_elements, 
-                    "pagination" => $PAGINATION["page_buttons"],
-                    "form_type" => "create", 
-                    "values" => [], 
-                    "page_params" => ["post" => $POST_ID]],
-                ["\Forms\Comment"]
-            );
-        } else {
-            \Utils\Errors::addError(\Utils\Constants::$MISSING_POST_URL_PARAM);
+        $post = $this->model->find(intval(\Utils\Http::getParam("post", "get")));
+        if (!$post) {
+            \Utils\Errors::addError(\Utils\Constants::$POST_DO_NOT_EXIST);
             \Utils\Http::redirect("index.php?page=post&action=view");
         }
+        $user_model = new \Models\User();
+        $author = $user_model->getUsername($post["author_id"]);
+        
+        $post["post_date"] = str_replace(" ", " à ", $post["post_date"]);
+        $post["last_modified"] = str_replace(" ", " à ", $post["last_modified"]);
+
+        if ($post["tags"] === "NULL") {
+            $post["tags"] = "";
+        } else {
+            $tags = explode("#", $post["tags"]);
+            unset($tags[0]);
+            $post["tags"] = "";
+
+            foreach ($tags as $tag) {
+                $post["tags"] .= \Utils\ElementBuilder::buildTag($tag);
+            }
+        }
+
+        
+
+        $title = $post["title"];
+
+        $comment_model = new \Models\Comment();
+
+        $PAGE = intval(\Utils\Http::getParam('pagination', "get"));
+        $POST_ID = intval(\Utils\Http::getParam("post", "get"));
+
+        $comment_number = $comment_model->countPostComments($POST_ID);
+        if (!$PAGE) {
+            $PAGE = 1;
+        }
+        $PAGINATION = \Utils\Pagination::paginate("index.php?page=post&action=get&post=$POST_ID&pagination=", $comment_number, 15, $PAGE);
+        
+        $pagination_params = $PAGINATION["request_params"];
+
+        $comments = $comment_model->getPostComments($POST_ID, $pagination_params["offset"], $pagination_params["limit"]); 
+
+        
+        $comments_elements = array();
+
+        foreach ($comments as $comment) {
+            $comment["post_date"] = str_replace(" ", " à ", $comment["post_date"]);
+            $comment["last_modified"] = str_replace(" ", " à ", $comment["last_modified"]);
+            $comment_author = $user_model->find($comment["author_id"]);
+            $own = false;
+
+            if (\Utils\Http::isSessionCorrect()) {
+                if (intval(\Utils\Http::getSession("user_id")) === intval($comment["author_id"])) {
+                    $own = true;
+                }
+            }
+
+            $comment_element = \Utils\ElementBuilder::buildComment(
+                $comment["profile_picture_path"],
+                $comment_author["username"],
+                $comment["author_id"],
+                $comment["comment_content"],
+                $comment["post_date"],
+                $comment["last_modified"],
+                $comment["id"],
+                $own
+            );
+            array_push($comments_elements, $comment_element);
+            
+        }
+
+        $POST_ID = \Utils\Http::getParam("post", "get");
+        \Utils\Renderer::render(
+            "Post", "Blog - $title", [
+                "author" => $author,
+                "post" => $post,
+                "comments" => $comments_elements, 
+                "pagination" => $PAGINATION["page_buttons"],
+                "form_type" => "create", 
+                "values" => [], 
+                "page_params" => ["post" => $POST_ID]],
+            ["\Forms\Comment"]
+        );
     }
 
     /**
@@ -171,15 +168,8 @@ class Post extends Controller
      */
     public function create(): void
     {
-        if (!\Utils\Http::isSessionCorrect()) {
-            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
-            \Utils\Http::redirect("index.php?page=post&action=view");
-        }
-
-        if (!\Utils\Http::isAdmin()) {
-            \Utils\Errors::addError(\Utils\Constants::$USER_IS_NOT_ADMIN);
-            \Utils\Http::redirect("index.php?page=post&action=view");
-        }
+        \Utils\Http::memberPage();
+        \Utils\Http::privatePage();
 
         $errors = array();
         if (\Utils\Http::getParam("submit")) {
@@ -269,8 +259,6 @@ class Post extends Controller
         \Utils\Renderer::render("Form", "Créer un nouveau post", ["form_type" => "create", "values" => $values], ["\Forms\Post"]);        
     }
 
-    
-
     /**
      * Edits a post
      * 
@@ -278,15 +266,8 @@ class Post extends Controller
      */
     public function edit(): void
     {
-        if (!\Utils\Http::isSessionCorrect()) {
-            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
-            \Utils\Http::redirect("index.php?page=post&action=view");
-        }
-
-        if (!\Utils\Http::getParam("post", "get")) {
-            \Utils\Errors::addError(\Utils\Constants::$MISSING_POST_URL_PARAM);
-            \Utils\Http::redirect("index.php?page=post&action=view");
-        }
+        \Utils\Http::memberPage();
+        \Utils\Http::privatePage();
 
         $original_poster = $this->model->getAuthor(intval(\Utils\Http::getParam("post", "get")));
         $user_id = intval(\Utils\Http::getSession("user_id")[0]);
@@ -384,38 +365,32 @@ class Post extends Controller
      */
     public function delete(): void
     {
-        if (!\Utils\Http::isSessionCorrect()) {
-            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
+        \Utils\Http::memberPage();
+        \Utils\Http::checkParam(\Utils\Http::getParam("post", "get"), \Utils\Constants::$MISSING_POST_URL_PARAM);
+        
+        $post_id = intval(\Utils\Http::getParam("post", "get"));
+        $user_id = intval(explode("|", \Utils\Http::getSession("user_id"))[0]);
+        $user_model = new \Models\User;
+
+        $original_poster = $this->model->getAuthor(intval($post_id));
+        
+        if (!$original_poster) {
+            \Utils\Errors::addError(\Utils\Constants::$POST_DO_NOT_EXIST);
             \Utils\Http::redirect("index.php?page=post&action=view");
         }
-        if (\Utils\Http::getParam("post", "get")) {
-            $post_id = intval(\Utils\Http::getParam("post", "get"));
-            $user_id = intval(explode("|", \Utils\Http::getSession("user_id"))[0]);
-            $user_model = new \Models\User;
-
-            $original_poster = $this->model->getAuthor(intval($post_id));
-            if (!$original_poster) {
-                \Utils\Errors::addError(\Utils\Constants::$POST_DO_NOT_EXIST);
-                \Utils\Http::redirect("index.php?page=post&action=view");
-            }
-            
-            if (!$user_model->isAdmin($user_id)) {
-                \Utils\Errors::addError(\Utils\Constants::$USER_IS_NOT_ADMIN);
-                \Utils\Http::redirect("index.php?page=post&action=view");
-            }
-
-            if ($user_id === $original_poster) {
-                $comment_model = new \Models\Comment();
-                $comment_model->deleteAll($post_id);
-                $this->model->delete($post_id);
-                \Utils\Errors::addError(\Utils\Constants::$POST_DELETE_SUCCESS, "dark");
-            }
-
-
-            \Utils\Http::redirect("index.php?page=post&action=view");
-        } else {
-            \Utils\Errors::addError(\Utils\Constants::$MISSING_POST_URL_PARAM);
+        
+        if (!$user_model->isAdmin($user_id)) {
+            \Utils\Errors::addError(\Utils\Constants::$USER_IS_NOT_ADMIN);
             \Utils\Http::redirect("index.php?page=post&action=view");
         }
+
+        if ($user_id === $original_poster) {
+            $comment_model = new \Models\Comment();
+            $comment_model->deleteAll($post_id);
+            $this->model->delete($post_id);
+            \Utils\Errors::addError(\Utils\Constants::$POST_DELETE_SUCCESS, "dark");
+        }
+
+        \Utils\Http::redirect("index.php?page=post&action=view");
     }
 }

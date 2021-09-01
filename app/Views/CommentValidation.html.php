@@ -35,9 +35,6 @@
         <h5 class='mx-4 mt-4'>Cliquez <a href='index.php?page=admin&action=dashboard'>ici</a> pour revenir sur l'interface d'administration</h5>
     </div>
     <table class='mx-4 w-100 mt-4'>
-        <thead>
-
-        </thead>
         <tbody class='list-group w-100'>
             <?= $page_comments ?>
         </tbody>
