@@ -35,15 +35,25 @@ class User extends \Models\Model
      * @param $email    User's email adress used during register
      * @param $password User's password used during register
      * 
-     * @return array|bool
+     * @return array<bool,string>
      */
-    public function login(string $email, string $password): array|bool
+    public function login(string $email, string $password): array
     {
         $query = $this->db->prepare("SELECT password, id, disabled FROM users WHERE email=:email");
         $query->execute([":email" => $email]);
         $user =  $query->fetch();
 
-        return $user;
+        if (!$user) {
+            return [false, \Utils\Constants::$INVALID_CREDENTIALS];
+        }
+
+        if (password_verify($password, $user["password"])) {
+            if (intval($user["disabled"]) === 1 ) {
+                return [false, \Utils\Constants::$ACCOUNT_BANNED_ERROR];
+            }
+            return [true, $user["id"] . "|" . $user["password"]];
+        }
+        return [false, \Utils\Constants::$INVALID_CREDENTIALS];
     }
 
     /**

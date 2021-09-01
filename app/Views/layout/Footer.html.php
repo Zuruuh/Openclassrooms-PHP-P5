@@ -23,7 +23,7 @@ namespace Layout;
  * @link     https://younes-ziadi.com/blog/
  */
 ?>
-<footer class="footer pt-2 pb-3">
+<footer class="footer pt-2">
     <div class="container">
         <div class="row d-flex justify-content-between">
             <div class="col-md-3 col-sm-6">
