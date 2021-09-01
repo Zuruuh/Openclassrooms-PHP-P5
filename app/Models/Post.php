@@ -69,18 +69,24 @@ class Post extends \Models\Model
      * 
      * @return int
      */
-    public function create(int $author_id, string $title, string $overview, string $content, string $tags): int
-    {
+    public function create(
+        int $author_id, 
+        string $title, 
+        string $overview, 
+        string $content, 
+        string $tags
+    ): int {
         $query = $this->db->prepare("INSERT INTO `posts` VALUES (NULL, :author_id, :title, :overview, :content, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :tags)");
         $query->bindValue(":author_id", $author_id);
         $query->bindValue(":title", $title);
         $query->bindValue(":overview", $overview);
         $query->bindValue(":content", $content);
-        $tag_value = "NULL";
+        $null = null;
         if ($tags === "") {
-            $tag_value = $tags;
+            $query->bindValue(":tags", $null, \PDO::PARAM_NULL);
+        } else {
+            $query->bindValue(":tags", $tags);
         }
-        $query->bindValue(":tags", $tag_value);
         $query->execute();
         return $this->db->lastInsertId();
     }
@@ -125,15 +131,30 @@ class Post extends \Models\Model
      * 
      * @return void
      */
-    public function update(int $post_id, string $post_title, string $post_overview, string $post_content, ?string $post_tags): void
-    {
+    public function update(
+        int $post_id, 
+        string $post_title, 
+        string $post_overview, 
+        string $post_content, 
+        ?string $post_tags
+    ): void {
         $query = $this->db->prepare("UPDATE posts SET title=:post_title, overview=:post_overview, post_content=:post_content, last_modified=CURRENT_TIMESTAMP(), tags=:post_tags WHERE posts . id=:post_id");
         $query->bindValue(":post_title", $post_title);
         $query->bindValue(":post_overview", $post_overview);
         $query->bindValue(":post_content", $post_content);
-        $query->bindValue(":post_tags", $post_tags);
-        $query->bindValue(":post_id", $post_id);
+        $null = null;
 
+        if (isset($post_tags)) {
+            if ($post_tags === "") {
+                $query->bindValue(":post_tags", $null, \PDO::PARAM_NULL);
+            } else {
+                $query->bindValue(":post_tags", $post_tags);
+            }
+        } else {
+            $query->bindValue(":post_tags", $null, \PDO::PARAM_NULL);
+        }
+        
+        $query->bindValue(":post_id", $post_id);
         $query->execute();
     }
 
