@@ -144,7 +144,8 @@ class Comment extends \Models\Model
         if ($admin) {
             $query->bindValue(":validated", 1);
         } else {
-            $query->bindValue(":validated", "NULL");
+            $null = null;
+            $query->bindValue(":validated", $null, \PDO::PARAM_NULL);
         }
         $query->execute();
     }
