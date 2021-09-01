@@ -53,8 +53,7 @@ class Comment extends \Models\Model
         $new_comments = array();
         foreach ($comments as $comment) {
             $user = $user_model->find($comment["author_id"]);
-            $path = $user_model->getExactPath($user["profile_picture_path"]);
-            $comment["profile_picture_path"] = $path;
+            $comment["profile_picture_path"] = $user["profile_picture_path"];
             array_push($new_comments, $comment);
         }
         return $new_comments;
