@@ -36,41 +36,30 @@ class User extends \Controllers\Controller
      */
     public function view():void
     {
-        \Utils\Http::checkParam(\Utils\Http::getParam("user", "get"), \Utils\Constants::$MISSING_USER_URL_PARAM);
+        if (!\Utils\Http::getParam("user", "get")) {
+            \Utils\Errors::addError(\Utils\Constants::$MISSING_USER_PARAM);
+            \Utils\Http::redirect("index.php");
+        }
         $user_id = intval(\Utils\Http::getParam("user", "get"));
         $user = $this->model->find($user_id);
-        
+
+        extract($user);
+        $user_role = $user["is_admin"] ? "Administrateur" : "Membre";
+
         if (!$user) {
             \Utils\Errors::addError(\Utils\Constants::$USER_DO_NOT_EXIST);
             \Utils\Http::redirect("index.php");
         }
-
-        extract($user);
-        $user_role = $user["is_admin"] ? "Administrateur" : "Membre";
         $sess = 0;
-        if (\Utils\Http::isSessionCorrect()) {
-            $sess = \Utils\Http::isSessionCorrect();
+        if (\Utils\Http::isSessionCorrect("user_id")) {
+            $sess = \Utils\Http::isSessionCorrect("user_id");
         }
         $self = false;
-        if (intval($sess) === $user_id) {
+        if (intval($sess) == $user_id) {
             $self = true;
         } 
 
-        \Utils\Renderer::render(
-            "User", "Blog - $username", 
-            ["errors" => [], 
-            "values" => [
-                "username" => $username, 
-                "user_path" => $profile_picture_path, 
-                "user_description" => $description, 
-                "user_location" => $location, 
-                "user_role" => $user_role, 
-                "user_register_date" => $register_date, 
-                "user_birthday" => $birthday, 
-                "self" => $self]
-            ], 
-            []
-        );
+        \Utils\Renderer::render("User", "Blog - $username", ["errors" => [], "values" => ["username" => $username, "user_path" => $profile_picture_path, "user_description" => $description, "user_location" => $location, "user_role" => $user_role, "user_register_date" => $register_date, "user_birthday" => $birthday, "self" => $self]], []);
     }
 
     /**
@@ -80,7 +69,10 @@ class User extends \Controllers\Controller
      */
     public function register(): void
     {
-        \Utils\Http::visitorPage(\Utils\Constants::$ALREADY_LOGGED_IN);
+        if (\Utils\Http::getSession("user_id")) {
+            \Utils\Errors::addError(\Utils\Constants::$ALREADY_LOGGED_IN, "primary");
+            \Utils\Http::redirect("index.php");
+        }
         $errors = array();
         if (\Utils\Http::getParam("submit")) {
 
@@ -149,7 +141,10 @@ class User extends \Controllers\Controller
      */
     public function login(): void
     {
-        \Utils\Http::visitorPage(\Utils\Constants::$ALREADY_LOGGED_IN);
+        if (\Utils\Http::getSession("user_id")) {
+            \Utils\Errors::addError(\Utils\Constants::$ALREADY_LOGGED_IN, "primary");
+            \Utils\Http::redirect("index.php");
+        }
         
         $errors = array();
         if (\Utils\Http::getParam("submit")) {
@@ -169,29 +164,17 @@ class User extends \Controllers\Controller
             // ?  Use model =>
             $EMAIL = htmlspecialchars(\Utils\Http::getParam("email"));
             $PASSWORD = htmlspecialchars(\Utils\Http::getParam("password"));
-            $user = $this->model->login($EMAIL, $PASSWORD);
 
-            if (!$user) {
-                // Invalid Email
-                \Utils\Errors::addError(\Utils\Constants::$INVALID_CREDENTIALS);
-                \Utils\Http::redirect("index.php?page=user&action=login");
-            }
-    
-            if (password_verify($PASSWORD, $user["password"])) {
-                if (intval($user["disabled"]) === 1 ) {
-                    // ! Account is banned
-                    \Utils\Errors::addError(\Utils\Constants::$ACCOUNT_BANNED_ERROR);
-                    \Utils\Http::redirect("index.php?page=user&action=login");
-                }
-                // ? Connect User
-                $session = $user["id"] . "|" . $user["password"];
+            $result = $this->model->login($EMAIL, $PASSWORD);
+            if ($result[0]) {
                 \Utils\Errors::addError(\Utils\Constants::$LOGIN_SUCCESS, "success");
-                \Utils\Http::setSession("user_id", $session);
+                \Utils\Http::setSession("user_id", $result[1]);
                 \Utils\Http::redirect("index.php");
+            } else {
+                \Utils\Errors::addError($result[1]);
+                \Utils\Renderer::render("Form", "Se Connecter", [], ["\Forms\Login"]);
             }
-            // Invalid Password
-            \Utils\Errors::addError(\Utils\Constants::$INVALID_CREDENTIALS);
-            \Utils\Http::redirect("index.php?page=user&action=login");
+
         } else {
             \Utils\Renderer::render("Form", "Se Connecter", [], ["\Forms\Login"]);
         }
@@ -216,9 +199,17 @@ class User extends \Controllers\Controller
      */
     public function edit(): void
     {
-        \Utils\Http::memberPage();
+        if (!\Utils\Http::getSession("user_id")) {
+            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
+            \Utils\Http::redirect("index.php");
+        }
 
-        $user_id = \Utils\Http::isSessionCorrect();
+        if (!\Utils\Http::isSessionCorrect("user_id")) {
+            \Utils\Errors::addError(\Utils\Constants::$INVALID_SESSION);
+            \Utils\Http::redirect("index.php");
+        }
+
+        $user_id = \Utils\Http::getSession("user_id")[0];
 
         $user = $this->model->find($user_id);
 

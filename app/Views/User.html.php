@@ -15,6 +15,10 @@ extract($values);
 
 $viewer = \Utils\Http::isAdmin();
 $user_id = \Utils\Http::getParam("user", "get");
+$self = false;
+if (\Utils\Http::getSession("user_id")) {
+    $self = intval(\Utils\Http::getSession("user_id")[0]) === intval($user_id);
+}
 ?>
 <div style="height:0;"></div>
 <section id="user" class='container-fluid px-5 pt-3 h-full'>
@@ -62,11 +66,11 @@ $user_id = \Utils\Http::getParam("user", "get");
                 </li>
                 <li class='list-group-item'>
                     <b>Date de création du compte:</b>
-                    <p>Le <time datetime='<?= $user_register_date ?>'><?= str_replace(" ", " à ", $user_register_date) ?></time></p>
+                    <p><?= $user_register_date ?></p>
                 </li>
                 <li class='list-group-item'>
                     <b>Anniversaire: </b>
-                    <p><time datetime='<?= $user_birthday ?>'><?= $user_birthday ?></time></p>
+                    <p><?= $user_birthday ?></p>
                 </li>
             </ul>
         </div>

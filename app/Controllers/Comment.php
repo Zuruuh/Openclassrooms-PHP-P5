@@ -35,9 +35,20 @@ class Comment extends \Controllers\Controller
      */
     public function create(): void
     {
-        \Utils\Http::memberPage();
-        \Utils\Http::checkParam(\Utils\Http::getParam("post", "get"), \Utils\Constants::$MISSING_POST_URL_PARAM);
-        \Utils\Http::checkParam(\Utils\Http::getParam("comment_content"), \Utils\Constants::$COMMENT_CONTENT_REQUIRED);
+        if (!\Utils\Http::isSessionCorrect()) {
+            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
+            \Utils\Http::redirect("index.php?page=post&action=view");
+        }
+
+        if (!\Utils\Http::getParam("post", "get")) {
+            \Utils\Errors::addError(\Utils\Constants::$MISSING_POST_URL_PARAM);
+            \Utils\Http::redirect("index.php?page=post&action=view");
+        }
+
+        if (!\Utils\Http::getParam("comment_content")) {
+            \Utils\Errors::addError(\Utils\Constants::$COMMENT_CONTENT_REQUIRED, "primary");
+            \Utils\Http::redirect("index.php?page=post&action=view");
+        }
 
         // ? Paramètres OK
 
@@ -87,8 +98,15 @@ class Comment extends \Controllers\Controller
      */
     public function delete(): void
     {
-        \Utils\Http::memberPage();
-        \Utils\Http::checkParam(\Utils\Http::getParam("comment", "get"), \Utils\Constants::$MISSING_COMMENT_URL_PARAM);
+        if (!\Utils\Http::isSessionCorrect()) {
+            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
+            \Utils\Http::redirect("index.php?page=post&action=view");
+        }
+
+        if (!\Utils\Http::getParam("comment", "get")) {
+            \Utils\Errors::addError(\Utils\Constants::$MISSING_COMMENT_URL_PARAM);
+            \Utils\Http::redirect("index.php?page=post&action=view");
+        }
 
         $user_id = \Utils\Http::getSession("user_id")[0]; 
 
@@ -116,10 +134,18 @@ class Comment extends \Controllers\Controller
      */
     public function edit(): void
     {
-        \Utils\Http::memberPage();
-        \Utils\Http::checkParam(\Utils\Http::getParam("comment", "get"), \Utils\Constants::$MISSING_COMMENT_URL_PARAM);
+        if (!\Utils\Http::isSessionCorrect()) {
+            \Utils\Errors::addError(\Utils\Constants::$MUST_BE_CONNECTED);
+            \Utils\Http::redirect("index.php?page=post&action=view");
+        }
+
+        if (!\Utils\Http::getParam("comment", "get")) {
+            \Utils\Errors::addError(\Utils\Constants::$MISSING_COMMENT_URL_PARAM);
+            \Utils\Http::redirect("index.php?page=post&action=view");
+        }
 
         $user_id = intval(\Utils\Http::getSession("user_id")[0]); 
+
         $comment = $this->model->find(intval(\Utils\Http::getParam("comment", "get")));
 
         if (!$comment) {

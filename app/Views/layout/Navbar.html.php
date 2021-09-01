@@ -52,7 +52,7 @@ namespace Layout;
                     </a>
                     <ul class='dropdown-menu vw-100' aria-labelledby="navbarDropdown">
                         <li>
-                            <a class='dropdown-item nav-dropdown-item' href='index.php?page=user&action=view&user=<?= \Utils\Http::isSessionCorrect() ?>'><i class='far fa-user'> </i> Mon Profil</a>
+                            <a class='dropdown-item nav-dropdown-item' href='index.php?page=user&action=view&user=<?= \Utils\Http::getSession("user_id")[0] ?>'><i class='far fa-user'> </i> Mon Profil</a>
                         </li>
                         <li><a class='dropdown-item nav-dropdown-item' href='index.php?page=user&action=edit'><i class='far fa-edit'> </i> Editer mon profil</a></li>
                         <li><hr class='dropdown-divider'></li>
