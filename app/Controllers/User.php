@@ -76,6 +76,12 @@ class User extends \Controllers\Controller
         $errors = array();
         if (\Utils\Http::getParam("submit")) {
 
+            \Utils\Http::setCookie("saved_first_name", htmlspecialchars(\Utils\Http::getParam("first_name")));
+            \Utils\Http::setCookie("saved_last_name", htmlspecialchars(\Utils\Http::getParam("last_name")));
+            \Utils\Http::setCookie("saved_username", htmlspecialchars(\Utils\Http::getParam("username")));
+            \Utils\Http::setCookie("saved_email", htmlspecialchars(\Utils\Http::getParam("email")));
+            \Utils\Http::setCookie("saved_birthday", htmlspecialchars(\Utils\Http::getParam("birthday")));
+            
             // ? 1 => VERIFIER SI LA VALEUR EXISTE
             
             $values = ["first_name","last_name","username","email","password","birthday"];
@@ -129,7 +135,20 @@ class User extends \Controllers\Controller
             }
 
         }
-        \Utils\Renderer::render("Form", "S'inscrire", [], ["\Forms\Register"]);
+        $saved_first_name = \Utils\Http::getCookie("saved_first_name");
+        $saved_last_name = \Utils\Http::getCookie("saved_last_name");
+        $saved_username = \Utils\Http::getCookie("saved_username");
+        $saved_email = \Utils\Http::getCookie("saved_email");
+        $saved_birthday = \Utils\Http::getCookie("saved_birthday");
+
+        $values = [
+            "saved_first_name" => $saved_first_name ? $saved_first_name : "",
+            "saved_last_name" => $saved_last_name ? $saved_last_name : "",
+            "saved_username" => $saved_username ? $saved_username : "",
+            "saved_email" => $saved_email ? $saved_email : "",
+            "saved_birthday" => $saved_birthday ? $saved_birthday : ""
+        ];
+        \Utils\Renderer::render("Form", "S'inscrire", ["values" => $values], ["\Forms\Register"]);
         
         
     }

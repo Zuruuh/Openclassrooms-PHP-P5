@@ -295,13 +295,19 @@ class Post extends Controller
             \Utils\Errors::addError(\Utils\Constants::$NOT_YOUR_POST);
             \Utils\Http::redirect("index.php?page=post&action=view");
         }
-
+        
         $errors = array();
         if (\Utils\Http::getParam("submit")) {
-            $values = ["post_title",
-                       "post_overview",
-                       "post_content"];
 
+            \Utils\Http::setCookie("saved_post_title", htmlspecialchars(\Utils\Http::getParam("post_title")));
+            \Utils\Http::setCookie("saved_post_overview", htmlspecialchars(\Utils\Http::getParam("post_overview")));
+            \Utils\Http::setCookie("saved_post_content", htmlspecialchars(\Utils\Http::getParam("post_content")));
+            \Utils\Http::setCookie("saved_post_tags", htmlspecialchars(\Utils\Http::getParam("post_tags")));
+
+            $values = ["post_title", 
+                "post_overview", 
+                "post_content"
+            ];
             foreach ($values as $value) {
                 if (!\Utils\Http::getParam($value)) {
                     $const = strtoupper($value) . "_REQUIRED";
@@ -309,25 +315,22 @@ class Post extends Controller
                     array_push($errors, \Utils\Constants::$$const);
                 }
             }
-
             if (!empty($errors)) {
-                \Utils\Renderer::render("Form", "Editer un post", ["form_type" => "edit", "values" => [], "page_params" => []], ["\Forms\Post"]);
+                \Utils\Renderer::render("Form", "Créer un nouveau post", [], ["\Forms\Post"]);
                 return;
             }
 
             $Validator = new \Utils\FormValidator();
 
             $input_errors = array();
+            array_push($input_errors, $Validator->checkTitle(\Utils\Http::getParam("post_title")));
+            array_push($input_errors, $Validator->checkOverview(\Utils\Http::getParam("post_overview")));
+            array_push($input_errors, $Validator->checkContent(\Utils\Http::getParam("post_content")));
 
-            array_push($input_errors, $Validator->checkTitle(\Utils\Http::getParam("title")));
-            array_push($input_errors, $Validator->checkOverview(\Utils\Http::getParam("overview")));
-            array_push($input_errors, $Validator->checkContent(\Utils\Http::getParam("content")));
             if (\Utils\Http::getParam("tags")) {
                 array_push($input_errors, $Validator->checkTags(\Utils\Http::getParam("tags")));
             }
-
             $correct = true;
-
             foreach ($input_errors as $input_error) {
                 if ($input_error) {
                     $correct = false;
@@ -372,7 +375,16 @@ class Post extends Controller
         }
         $tags = implode(",", $newtags);
 
-        $values = ["post_title" => $title, "post_overview" => $overview, "post_content" => $post_content, "post_tags" => $tags];
+        $saved_post_title = \Utils\Http::getCookie("saved_post_title");
+        $saved_post_overview = \Utils\Http::getCookie("saved_post_overview");
+        $saved_post_content = \Utils\Http::getCookie("saved_post_content");
+        $saved_post_tags = \Utils\Http::getCookie("saved_post_tags");
+        $values = [
+            "post_title" => $saved_post_title ? $saved_post_title : $title,
+            "post_overview" => $saved_post_overview ? $saved_post_overview : $overview,
+            "post_content" => $saved_post_content ? $saved_post_content : $post_content,
+            "post_tags" => $saved_post_tags ? $saved_post_tags : $tags
+        ];
         \Utils\Renderer::render("Form", "Editer un post", ["values" => $values, "form_type" => "edit", "page_params" => ["post" => intval(\Utils\Http::getParam("post", "get"))]], ["\Forms\Post"]);
 
     }
