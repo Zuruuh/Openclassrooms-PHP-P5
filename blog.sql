@@ -67,7 +67,7 @@ CREATE TABLE `users` (
   `username` varchar(32) DEFAULT NULL,
   `email` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
-  `profile_picture_path` varchar(16) NOT NULL,
+  `profile_picture_path` varchar(32) NOT NULL,
   `description` varchar(255) DEFAULT 'Inconnu au bataillon',
   `location` varchar(48) DEFAULT 'Inconnue',
   `register_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
