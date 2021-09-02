@@ -146,6 +146,8 @@ abstract class Constants
     public static $SUBJECT_TOO_LONG = "Votre object est trop long !";
     
     public static $MESSAGE_TOO_LONG = "Votre message est trop long !";
+    public static $CONTACT_SUCCESS = "Votre message à été correctement envoyé !";
+
 
     // ! BAN CONSTANTS
     

@@ -23,6 +23,19 @@
         <h3 class="text-left">Bienvenue sur mon Blog !</h3>
     </div>
 </section>
+<section>
+    <h2 class ="text-center py-3">Posts récents 📖</h2>
+    <div class="container-fluid px-4 list-group pt-5">
+    <?php if (empty($posts)) { ?>
+        <p>On dirait bien qu'il n'y a rien à voir ici 🙁</p>
+    <?php } else {
+        foreach ($posts as $post) { 
+            echo $post;
+        } ?>
+    <?php } ?> 
+    </div>
+</section>
+<hr>
 <section id="projets" class="d-flex flex-column justify-content-center">
     <h2 class="text-center py-3">Mes projets 👇</h2>
     <div class="container">
