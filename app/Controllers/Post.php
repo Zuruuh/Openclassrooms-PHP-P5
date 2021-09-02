@@ -125,13 +125,8 @@ class Post extends Controller
             $comment["post_date"] = str_replace(" ", " à ", $comment["post_date"]);
             $comment["last_modified"] = str_replace(" ", " à ", $comment["last_modified"]);
             $comment_author = $user_model->find($comment["author_id"]);
-            $own = false;
-
-            if (\Utils\Http::isSessionCorrect()) {
-                if (intval(\Utils\Http::getSession("user_id")) === intval($comment["author_id"])) {
-                    $own = true;
-                }
-            }
+            
+            $own = intval(\Utils\Http::isSessionCorrect("user_id")) === intval($comment["author_id"]);
 
             $comment_element = \Utils\ElementBuilder::buildComment(
                 $comment["profile_picture_path"],
