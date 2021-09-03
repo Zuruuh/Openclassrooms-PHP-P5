@@ -82,7 +82,7 @@ class Admin extends Controller
             extract($user);
             $exact_path = $user_model->getProfilePicture($id);
             $element  = "<div class='user-preview d-flex w-100 my-4 border rounded-1 px-2 h-auto'>";
-            $element .= "<img src='$exact_path' alt='$username's profile' class='rounded-circle w-25 h-25 p-2' />";
+            $element .= "<img src='./public/$exact_path' alt='$username's profile' class='rounded-circle w-25 h-25 p-2' />";
             $element .= "<div><p><a href='index.php?page=user&action=view&user=$id'>$username</a></p>";
             $element .= "<div><p>$first_name</p>";
             $element .= "<p>$last_name</p></div></div></div>";
@@ -97,7 +97,7 @@ class Admin extends Controller
 
             $element  = "<div class='comment-preview d-flex w-100 my-4 border rounded-1 px-2 h-auto'>";
             $element .= "<img src='./public/$exact_path' alt='$user_name's profile' class='rounded-circle w-25 h-25 p-2' />";
-            $element .= "<div><p><a href='index.php?page=user&action=view&user=$id'>$username</a></p>";
+            $element .= "<div><p><a href='index.php?page=user&action=view&user=$author_id'>$user_name</a></p>";
             $element .= "<p>$comment_content</p>";
             $element .= "<p><i>Post: </i><a href='index.php?page=post&action=get&post=$post_id'>$post_name</a></p></div></div>";
             array_push($comments_preview, $element);
