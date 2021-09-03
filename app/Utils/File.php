@@ -26,7 +26,7 @@ namespace Utils;
  */
 class File
 {
-    private static $_DIR = "./public/pictures/";
+    private static $_DIR = "./public/";
 
     /**
      * Saves an image in the pictures/ folder
@@ -43,7 +43,7 @@ class File
 
         $name = $name . "." . $extension;
 
-        move_uploaded_file($tmp_name, self::$_DIR . $name);
+        move_uploaded_file($tmp_name, self::$_DIR . "pictures/" . $name);
 
         return $name;
     }
