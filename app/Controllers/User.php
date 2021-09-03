@@ -249,6 +249,11 @@ class User extends \Controllers\Controller
         $errors = array();
         if (\Utils\Http::getParam("submit")) {
 
+            \Utils\Http::setCookie("saved_first_name", htmlspecialchars(\Utils\Http::getParam("first_name")));
+            \Utils\Http::setCookie("saved_last_name", htmlspecialchars(\Utils\Http::getParam("last_name")));
+            \Utils\Http::setCookie("saved_description", htmlspecialchars(\Utils\Http::getParam("description")));
+            \Utils\Http::setCookie("saved_location", htmlspecialchars(\Utils\Http::getParam("location")));
+
             $values = ["first_name","last_name"];
 
             foreach ($values as $value) {
@@ -288,11 +293,11 @@ class User extends \Controllers\Controller
                     $user_profile_picture = $this->model->getProfilePicture($user_id);
 
                     if (empty($image_errors)) {
-                        if ($user_profile_picture !== "default.png") {
+                        if ($user_profile_picture !== "assets/default.png") {
                             \Utils\File::deleteImage($user_profile_picture);
                         }
 
-                        $NEW_PATH = \Utils\File::saveImage($image, $user_id);
+                        $NEW_PATH = "pictures/" . \Utils\File::saveImage($image, $user_id);
                     }
                 } else {
                     $NEW_PATH = $this->model->getProfilePicture($user_id);
@@ -315,7 +320,7 @@ class User extends \Controllers\Controller
                         $user_id,
                         htmlspecialchars(\Utils\Http::getParam("first_name")),
                         htmlspecialchars(\Utils\Http::getParam("last_name")),
-                        "pictures/" . $NEW_PATH,
+                        $NEW_PATH,
                         htmlspecialchars(\Utils\Http::getParam("description")),
                         htmlspecialchars(\Utils\Http::getParam("location"))
                     );
@@ -325,16 +330,23 @@ class User extends \Controllers\Controller
 
             }
         }
+        $saved_first_name = \Utils\Http::getCookie("saved_first_name");
+        $saved_last_name = \Utils\Http::getCookie("saved_last_name");
+        $saved_description = \Utils\Http::getCookie("saved_description");
+        $saved_location = \Utils\Http::getCookie("saved_location");
+
+        $values = [
+            "first_name" => $saved_first_name ? $saved_first_name : $first_name,
+            "last_name" => $saved_last_name ? $saved_last_name : $last_name,
+            "desc" => $saved_description ? $saved_description : $desc,
+            "location" => $saved_location ? $saved_location : $location,
+            "profile_picture_path" => $this->model->getProfilePicture($user_id)
+        ];
         \Utils\Renderer::render(
             "SelfUser", 
-            "Blog - Modifiez vos informations personnelles", ["values" => [
-                "first_name" => $first_name,
-                "last_name" => $last_name,
-                "desc" => $desc, 
-                "location" => $location,
-                "profile_picture_path" => $this->model->getProfilePicture($user_id)
-            ],
-            "form_type" => "edit",
+            "Blog - Modifiez vos informations personnelles", [
+                "values" => $values,
+                "form_type" => "edit",
             ],
             ["\Forms\User"]
         );
