@@ -34,7 +34,7 @@ abstract class Constants
     public static $MAX_EMAIL_LENGTH = 64;
     public static $MAX_DESC_LENGTH = 255;
     public static $MAX_LOCATION_LENGTH = 48;
-    public static $MAX_IMAGE_SIZE = 512000;
+    public static $MAX_IMAGE_SIZE = 2048000;
     public static $MAX_MESSAGE_SIZE = 2048;
 
         // * USER ERROR MESSAGES
@@ -79,7 +79,7 @@ abstract class Constants
     public static $LOCATION_SPECIAL_CHARS = "Vous ne devez pas utiliser de charactères spéciaux dans votre location !";
   
     public static $IMAGE_TYPE = "Votre image doit être au format JPEG ou PNG !";
-    public static $IMAGE_TOO_HEAVY = "Votre image est trop lourde (Max 512Ko).";
+    public static $IMAGE_TOO_HEAVY = "Votre image est trop lourde (Max 2Mo).";
     public static $DEFAULT_IMAGE = "assets/default.png";
 
     public static $USER_DO_NOT_EXIST = "Cet utilisateur n'existe pas !";
