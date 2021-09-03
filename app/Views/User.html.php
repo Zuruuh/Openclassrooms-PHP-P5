@@ -38,7 +38,7 @@ $user_id = \Utils\Http::getParam("user", "get");
     <div class='d-flex h-full justify-content-between' id="user-info-container">
         <div id="user-top" class='h-full'>
             <img src="./public/<?=$user_path?>" alt="<?= $username ?>" id="user-info-profile-picture" style="width:300px;height:300px" class='rounded-circle border border-2 border-primary'>
-            <div>
+            <div style="max-width: 300px; word-break:break-word;">
                 <h4><?= $username ?></h4>
                 <p><?= $user_description ?></p>
             </div>
